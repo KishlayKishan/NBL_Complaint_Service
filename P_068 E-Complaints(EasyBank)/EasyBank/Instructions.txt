@@ -1,0 +1,8 @@
+Project Number :- P_068
+Project Title :- E-Complaints 
+Project Name :- Easy Bank (Spring Boot Application)
+
+*---For opening the Welcome page, please refer to the Link Provided Below---*
+
+	http://localhost:8080/welcome
+
