@@ -152,6 +152,8 @@
 									<td>${user.lastname}</td>
 									<td>${user.mobileno}</td>
 									<td>${user.emailid}</td>
+
+
 									<td><a href="/edit-user?id=${user.id }"><span
 											class="glyphicon glyphicon-pencil"></span></a></td>
 									<td><a href="/delete-user?id=${user.id }"><span

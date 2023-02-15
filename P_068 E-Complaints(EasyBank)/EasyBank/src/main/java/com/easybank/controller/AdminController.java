@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.util.List;
 
 import com.easybank.model.Admin;
 import com.easybank.model.User;
@@ -72,7 +73,9 @@ public class AdminController {
 		request.setAttribute("complaint", adminService.showAllComplaints());
 		request.setAttribute("mode", "All_COMPLAINTS");
 		return "complaints";
-		
-		
+
 	}
+
+
+
 }

@@ -184,12 +184,14 @@
 								<th>Account No</th>
 								<th>Category</th>
 								<th>Sub Category</th>
+								<th>branch</th>
 								<th>Details</th>
+								<th>Assignto</th>
+								<th>Assigndate</th>
 								<th>Priority</th>
 								<th>Status</th>
 								<th>Edit</th>
 								<th>Delete</th>
-
 							</tr>
 						</thead>
 						<tbody>
@@ -202,12 +204,12 @@
 									<td>${complaint.accountno}</td>
 									<td>${complaint.category}</td>
 									<td>${complaint.subcategory}</td>
+									<td>${complaint.branch}</td>
 									<td>${complaint.details}</td>
-									<td>${complaint.priority}</td>
+									<td>${complaint.assignto}</td>
+									<td>${complaint.assigndate}</td>
+								    <td>${complaint.priority}</td>
 									<td>${complaint.status}</td>
-
-
-
 									<td><a href="/edit-status?id=${complaint.id }"><span
 											class="glyphicon glyphicon-pencil"></span></a></td>
 									<td><a href="/delete-complaint?id=${complaint.id }"><span

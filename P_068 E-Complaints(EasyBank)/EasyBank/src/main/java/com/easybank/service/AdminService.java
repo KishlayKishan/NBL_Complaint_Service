@@ -2,6 +2,7 @@ package com.easybank.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -12,7 +13,6 @@ import com.easybank.dao.AdminRepository;
 import com.easybank.dao.ComplaintRepository;
 import com.easybank.model.Admin;
 import com.easybank.model.Complaint;
-import com.easybank.model.User;
 
 @Service
 @Transactional
@@ -50,5 +50,10 @@ public class AdminService {
 	public void deleteComplaint(int id) {
 		complaintRepo.deleteById(id);
 		;
+	}
+
+    public void complainstatus(int id) {
+		complaintRepo.findById(id);
+
 	}
 }

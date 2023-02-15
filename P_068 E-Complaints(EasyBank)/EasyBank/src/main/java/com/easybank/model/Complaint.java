@@ -18,7 +18,10 @@ public class Complaint implements Serializable {
 	private String accountno;
 	private String category;
 	private String subcategory;
+	private String branch;
 	private String details;
+	private String assignto;
+	private String assigndate;
 	private String priority;
 	private String status;
 	
@@ -28,9 +31,8 @@ public class Complaint implements Serializable {
 	}
 
 
-
 	public Complaint(String firstname, String lastname, String emailid, String accountno, String category,
-			String subcategory, String details, String priority, String status) {
+					 String subcategory, String branch, String details, String assignto, String assigndate, String priority, String status) {
 		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -38,7 +40,10 @@ public class Complaint implements Serializable {
 		this.accountno = accountno;
 		this.category = category;
 		this.subcategory = subcategory;
+		this.branch = branch;
 		this.details = details;
+		this.assignto = assignto;
+		this.assigndate = assigndate;
 		this.priority = priority;
 		this.status = status;
 	}
@@ -127,6 +132,10 @@ public class Complaint implements Serializable {
 		this.subcategory = subcategory;
 	}
 
+	public  String getBranch() { return branch; }
+
+	public void setBranch(String branch) { this.branch = branch;}
+
 
 
 	public String getDetails() {
@@ -134,10 +143,26 @@ public class Complaint implements Serializable {
 	}
 
 
-
 	public void setDetails(String details) {
 		this.details = details;
 	}
+
+
+	public String getAssignto() {
+		return assignto;
+	}
+
+	public void setAssignto(String assignto) {
+		this.assignto = assignto;
+	}
+
+	public String getAssigndate() { return assigndate;}
+
+	public void setAssigndate(String assigndate) {this.assigndate = assigndate;}
+
+
+
+
 
 
 
@@ -168,8 +193,8 @@ public class Complaint implements Serializable {
 	@Override
 	public String toString() {
 		return "Complaint [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", emailid=" + emailid
-				+ ", accountno=" + accountno + ", category=" + category + ", subcategory=" + subcategory + ", details="
-				+ details + ", priority=" + priority + ", status=" + status + "]";
+				+ ", accountno=" + accountno + ", category=" + category + ", subcategory=" + subcategory + ", branch=" + branch + ", details="
+				+ details + ", assignto=" + assignto + ", assigndate=" + assigndate + ", priority=" + priority + ", status=" + status + "]";
 	}
 	
 	

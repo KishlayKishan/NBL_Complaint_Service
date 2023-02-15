@@ -1,12 +1,12 @@
 package com.easybank.model;
 
+import com.easybank.dao.UserRepository;
 import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
 
 
-@Data
 @Entity
 @Table(name="userdetails")
 public class User {
@@ -22,7 +22,11 @@ public class User {
 	public User() {
 		
 	}
-	
+
+	public User(UserRepository userRepository) {
+
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -79,7 +83,7 @@ public class User {
 		return "User [id=" + id + ", username=" + username + ", firstname=" + firstname + ", lastname=" + lastname
 				+ ", mobileno=" + mobileno + ", emailid=" + emailid + ", password=" + password + "]";
 	}
-	
-	
-	
+
+
+
 }

@@ -61,7 +61,7 @@ public class BankController {
 	
 	@RequestMapping("/edit-user")
 	public String editUser(@RequestParam int id,HttpServletRequest request ) {
-		//userService.editUser(id);
+		userService.editUser(id);
 		request.setAttribute("user", userService.editUser(id));
 		request.setAttribute("mode", "MODE_UPDATE");
 		return "welcomepage";
@@ -95,6 +95,7 @@ public class BankController {
 		request.setAttribute("mode", "MODE_LOGIN");
 		return "complaints";
 	}
+
 }
 
 
