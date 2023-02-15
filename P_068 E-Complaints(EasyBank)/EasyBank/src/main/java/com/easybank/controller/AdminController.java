@@ -65,7 +65,7 @@ public class AdminController {
 		request.setAttribute("complaint", adminService.editStatus(id));
 		request.setAttribute("mode", "MODE_UPDATE");
 		//request.setAttribute("mode", "MODE_COMPLAINTS");
-		return "homepage";
+		return "complaints";
 	}
 	@RequestMapping("/delete-complaint")
 	public String deleteComplaint(@RequestParam int id, HttpServletRequest request ) {

@@ -30,6 +30,14 @@ public class ComplaintController {
 		request.setAttribute("mode", "MODE_HOME");
 		return "homepage";
 	}
+	
+	@PostMapping("/update-complaint")
+	public String updateComplaint(@ModelAttribute Complaint complaint, BindingResult bindingResult, HttpServletRequest request) {
+		complaintService.updateComplaint(complaint);
+		request.setAttribute("mode", "ALL_COMPLAINTS");
+		return "complaints";
+	}
+	
 	@RequestMapping("/contact")
 	public String contact(HttpServletRequest request) {
 		request.setAttribute("mode", "CONTACT_US");
@@ -39,6 +47,13 @@ public class ComplaintController {
 	public String checkStatus( HttpServletRequest request) {
 		request.setAttribute("complaints", complaintService.checkStatus());
 		request.setAttribute("mode", "CHECKSTATUS");
+		return "homepage";
+	}
+	
+	@RequestMapping("/getStatus")
+	public String checkStatus( HttpServletRequest request,@RequestParam("id") int cid) {
+		request.setAttribute("complaints", complaintService.getComplaintById(cid));
+		request.setAttribute("mode", "MODE_SHOW_USER_COMPLAINT");
 		return "homepage";
 	}
 

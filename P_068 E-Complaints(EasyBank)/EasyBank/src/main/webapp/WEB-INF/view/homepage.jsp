@@ -238,232 +238,56 @@
 			</div>
 
 		</c:when>
-		<c:when test="${mode=='MODE_UPDATE' }">
+		<c:when test="${mode=='MODE_SHOW_USER_COMPLAINT' }">
 			<div class="container text-center">
-				<h3>Update User</h3>
+				<h3>Complaint Details</h3>
 				<hr>
-				<form class="form-horizontal" method="POST" action="save-complaint">
-					<input type="hidden" name="id" value="${complaint.id }" />
-					<!-- <div class="form-group">
-							<label class="control-label col-md-3">Username</label>
-							<div class="col-md-7">
-								<input type="text" class="form-control" name="username"
-									id="username" placeholder="Enter your username" min=8 max=8
-									required value="${user.username }" />
-							</div>
-						</div> -->
+				<c:set var="complaint" value="${complaints}"/> 
+				<form class="form-horizontal">
 					<div class="form-group">
-						<label class="control-label col-md-3">First Name</label>
+						<label class="control-label col-md-3">Complaint ID</label>
 						<div class="col-md-7">
-							<input type="text" class="form-control" name="firstname"
-								id="firstname" placeholder="Enter your firstname"
-								required="required" value="${complaint.firstname }" />
+							<input type="text" class="form-control" name="id" value="${complaint.id}"  disabled/>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-md-3">Last Name</label>
+						<label class="control-label col-md-3">Details of the Complaint</label>
 						<div class="col-md-7">
-							<input type="text" class="form-control" name="lastname"
-								id="lastname" placeholder="Enter your lastname"
-								required="required" value="${complaint.lastname }" />
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="control-label col-md-3">Email ID </label>
-						<div class="col-md-3">
-							<input type="email" class="form-control" name="emailid"
-								id="emailid" placeholder="Enter your email" required="required"
-								value="${complaint.emailid }" />
+							<input type="text" class="form-control" name="details"
+								cols="40" rows="4" value="${complaint.details}" disabled>
+							</input>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-md-3">Account No</label>
+						<label class="control-label col-md-3">Complaint status as per date</label>
 						<div class="col-md-7">
-							<input type="text" class="form-control" name="accountno"
-								id="accountno" placeholder="Enter account no"
-								required="required" value="${complaint.accountno }" />
+							<input type="text" class="form-control" name="status"
+								cols="40" rows="4" value="${complaint.status}" disabled>
+							</input>
 						</div>
 					</div>
 					<div class="form-group">
-                           	<label class="control-label col-md-3">Branch</label>
-                			<div class="col-md-7">
-                            <input type="text" class="form-control" name="Branch"
-                                 id="Branch" placeholder="Enter your Branch" required="required"
-                                 value="${complaint.branch }" />
-                                </div>
-                     </div>
-					<div class="form-group">
-						<label class="control-label col-md-3">Category</label>
+						<label class="control-label col-md-3">Complaint Priority</label>
 						<div class="col-md-7">
-							<select input type="text" class="form-control" name="category"
-								id="category" placeholder="Enter nature of complaint"
-								required="required" value="${complaint.category }">
-								                                <option value="1.Mobile Banking Transactions">1.Mobile Banking Transactions</option>
-                                								<option value="2.Internet Banking Transactions">2.Internet Banking Transactions</option>
-                                								<option value="3.RTGS Transactions">3.RTGS Transactions</option>
-                                								<option value="4.NON ADHERENCE TO BCSBI CODES">4.NON ADHERENCE TO BCSBI CODES</option>
-                                								<option value="5.Cards Transactions at POS/online transactions">5.Cards Transactions at POS/online transactions</option>
-                                								<option value="6.REMITTANCE">6.REMITTANCE</option>
-                                								<option value="7.ATM/Debit Cards">7.ATM/Debit Cards</option>
-                                								<option value="8.Credit Cards">8.Credit Cards</option>
-                                								<option value="9.Other Payment Systems">9. Other Payment Systems</option>
-                                								<option value="10.Loan and Advances">10.Loan and Advances</option>
-                                								<option value="11.Loan and Advances: Type of Complain">11.Loan and Advances: Type of Complain</option>
-                                								<option value="12.Deposit Accounts">12.Deposit Accounts</option>
-                                								<option value="13.Prepaid Instruments">13.Prepaid Instruments</option>
-                                								<option value="14.CHARGES WITHOUT PRIOR NOTICE">14.CHARGES WITHOUT PRIOR NOTICE</option>
-                                								<option value="15.PENSION">15.PENSION</option>
-                                								<option value="16.FAILURE ON COMMITMENTS">16.FAILURE ON COMMITMENTS</option>
-                                								<option value="17.RECOVERY AGENT">17.RECOVERY AGENT</option>
-                                								<option value="18.Direct Sales Agents">18.Direct Sales Agents</option>
-                                								<option value="19.NOTES AND COINS">19. NOTES AND COINS</option>
-                                								<option value="20.NON ADHERENCE TO FAIR PRACTICES CODE">20.NON ADHERENCE TO FAIR PRACTICES CODE</option>
-                                								<option value="21.NON ADHERENCE TO BCSBI CODES">21.NON ADHERENCE TO BCSBI CODES</option>
-                                								<option value="22.Tariff Schedule and Service Charges">22.Tariff Schedule and Service Charges</option>
-                                								<option value="23.Staff Behaviour">23.Staff Behaviour</option>
-                                								<option value="24.Behaviour of Business Correspondents">24.Behaviour of Business Correspondents Transactions</option>
-                                								<option value="25.Misselling of third party products (Insurance / MF etc.)">25.Misselling of third party products (Insurance / MF etc.)</option>
-                                								<option value="26.Third party service complaints Transactions">26.Third party service complaints</option>
-                                								<option value="27.Account opening related complaints Transactions">27.Account opening related complaints Transactions</option>
-                                								<option value="28.Others Transactions">28.Others Transactions</option>
-							</select>
+							<input type="text" class="form-control" name="priority"
+								cols="40" rows="4" value="${complaint.priority}" disabled>
+							</input>
 						</div>
 					</div>
-
 					<div class="form-group">
-						<label class="control-label col-md-3">Sub Category</label>
+						<label class="control-label col-md-3">Assigned To</label>
 						<div class="col-md-7">
-							<select input type="text" class="form-control" name="subcategory"
-								id="subcategory" placeholder="Optional" required="required"
-								value="${complaint.subcategory }">
-								<option value="1.1 Registration issues">1.1 Registration issues</option>
-                                								<option value="1.2 MMID related issues">1.2 MMID related issues</option>
-                                								<option value="1.3 Login issues">1.3 Login issues</option>
-                                								<option value="1.4 Bill Payment related">1.4 Bill Payment related</option>
-                                								<option value="1.5 Fund transfer related">1.5 Fund transfer related</option>
-                                								<option value="1.6 Other banking requests">1.6 Other banking requests</option>
-                                                                <option value="1.7 MPIN/OTP related">1.7 MPIN/OTP related</option>
-                                                                <option value="1.8 Mobile Banking requests (non financial)">1.8 Mobile Banking requests (non financial)</option>
-                                                                <option value="1.9 Others">1.9 Others</option>
-                                                                <option value=><option/>
-
-                                                                <option value="2.1 Registration issues">2.1 Registration issues</option>
-                                                                <option value="2.2 Online Banking Profile">2.2 Online Banking Profile</option>
-                                                                <option value="2.3 Online Banking Requests (non financial)">2.3 Online Banking Requests (non financial)</option>
-                                                                <option value="2.4 Online Bill Payment">2.4 Online Bill Payment</option>
-                                                                <option value="2.5 Online Payment Transfer">2.5 Online Payment Transfer</option>
-                                                                <option value="2.6 SMS related issues">2.6 SMS related issues</option>
-                                                                <option value="2.7 Login issues">2.7 Login issues</option>
-                                                                <option value="2.8 OTP related issues">2.8 OTP related issues</option>
-                                                                <option value="2.9 Others">2.9 Others</option>
-                                                                <option value=><option/>
-
-                                                                <option value="3.1 Amount debited but not credited to beneficiary:">3.1 Amount debited but not credited to beneficiary</option>
-                                                                <option value="3.2 Errors in details of remitter/beneficiary">3.2 Errors in details of remitter/beneficiary</option>
-                                                                <option value="3.3 Excess amount remitted">3.3 Excess amount remitted</option>
-                                                                <option value="3.4 Interest on delayed payment">3.4 Interest on delayed payment</option>
-                                                                <option value="3.5 Remittance charges are high">3.5 Remittance charges are high</option>
-                                                                <option value="3.6 RTGS transactions through INB/MBS">3.6 RTGS transactions through INB/MBS</option>
-                                                                <option value="3.7 Others">3.7 Others</option>
-                                                                <option value=><option/>
-
-                                                                <option value="4.1 Amount debited but not credited to beneficiary">4.1 Amount debited but not credited to beneficiary	</option>
-                                                                <option value="4.2 Errors in details of remitter/beneficiary">4.2 Errors in details of remitter/beneficiary	</option>
-                                                                <option value="4.3 Excess amount remitted">4.3 Excess amount remitted</option>
-                                                                <option value="4.4 Interest on delayed payment">4.4 Interest on delayed payment</option>
-                                                                <option value="4.5 Remittance charges are high">4.5 Remittance charges are high</option>
-                                                                <option value="4.6 NEFT transactions through INB/MBS">4.6 NEFT transactions through INB/MBS</option>
-                                                                <option value="4.7 Others">4.7 Others</option>
-                                                                <option value=><option/>
-
-                                                                <option value="	5.1 OTP related	">	5.1 OTP related	</option>
-                                                                <option value="	5.2 Transaction not processed	">	5.2 Transaction not processed	</option>
-                                                                <option value="	5.3 Payment Gateway related	">	5.3 Payment Gateway related	</option>
-                                                                <option value="	5.4 POS related - Issuer	">	5.4 POS related - Issuer	</option>
-                                                                <option value="	5.5 POS related - Acquirer	">	5.5 POS related - Acquirer	</option>
-                                                                <option value="	5.6 Non financial transaction	">	5.6 Non financial transaction	</option>
-                                                                <option value="	5.7 Others	">	5.7 Others	</option>
-                                                                <option value=><option/>
-
-                                                                <option value="	6.1 Delays in payment	">	6.1 Delays in payment	</option>
-                                                                <option value="	6.2 Collection of Cheques, delays	">	6.2 Collection of Cheques, delays	</option>
-                                                                <option value="	6.3 wrong credits in transfer of funds	">	6.3 Wrong credits in transfer of funds	</option>
-                                                                <option value=><option/>
-
-                                                                <option value="	7.1 NON/SHORT DISPENSATION OF CASH	">	7.1 NON/SHORT DISPENSATION OF CASH	</option>
-                                                                <option value="	7.2 FRAUDULENT TRANSACTION	">	7.2 FRAUDULENT TRANSACTION	</option>
-                                                                <option value="	7.3 OTHERS	">	7.3 OTHERS	</option>
-                                                                <option value=><option/>
-                                                                <option value="	OTHERS___">	OTHERS___:	</option>
-							</select>
+							<input type="text" class="form-control" name="assignto"
+								cols="40" rows="4" value="${complaint.assignto}" disabled>
+							</input>
 						</div>
 					</div>
-
-					<div class="form-group">
-						<label class="control-label col-md-3">Details of the
-							Complaint</label>
-						<div class="col-md-7">
-							<textarea input type="text" class="form-control" name="details"
-								id="details" placeholder="Describe Your Complaint in Brief..."
-								cols="40" rows="1"
-								required="required" value="${complaint.details }">
-							</textarea>
-						</div>
-					</div>
-
-					<div class="form-group">
-                    						<label class="control-label col-md-3">Assign
-                    							To</label>
-                    						<div class="col-md-7">
-                    							<select input type="text" class="form-control" name="Assign To"
-                    								id="Assign To" placeholder="Complaint is Assign to ?"
-                    								required="required"
-                    								value="${complaint.assignto}">
-                    								<option value="Person 1">Person 1</option>
-                    								<option value="Person 2">Person 2</option>
-                    								<option value="Person 3">Person 3</option>
-                    								<option value="Person 4">Person 4</option>
-                    								<option value="Person 5">Person 5</option>
-                    							</select>
-                    						</div>
-                    					</div>
-
-                    <div class="form-group">
-                                        <label class="control-label col-md-3">Priority</label>
-                                        						<div class="col-md-7">
-                                        							<select input type="text" class="form-control" name="priority"
-                                        								id="priority" placeholder="Priority Of Complaint"
-                                        								required="required"
-                                        								value="${complaint.priority}">
-                                        								<option value="Low">Low</option>
-                                        								<option value="Moderate">Moderate</option>
-                                        								<option value="High">High</option>
-                                        							</select>
-                                        						</div>
-                                        					</div>
-					<div class="form-group">
-                    						<label class="control-label col-md-3">Set Assign Date</label>
-                    						<div class="col-md-7">
-                    							<input type="text" class="form-control" name="Assign Date"
-                    								id="Assign Date" placeholder="__/__/____" required="required"
-                    								value="${complaint.assigndate}">
-                    						</div>
-                    					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3">Set Status/Closed Date</label>
-						<div class="col-md-7">
-							<input type="text" class="form-control" name="status" id="status"
-								placeholder="Open/Closed (Closed Date)" required="required"
-								value="${complaint.status}">
-						</div>
-					</div>
-					<div class="form-group ">
-						<input type="submit" class="btn btn-primary" value="Update" />
-					</div>
+					
 				</form>
 			</div>
+
 		</c:when>
+		
 		<c:when test="${mode=='CHECKSTATUS'}">
 			<div class="container text-center" id="tasksDiv">
 				<h3>All Complaint Status</h3>
@@ -484,10 +308,11 @@
 								<th>assignto</th>
 								<th>Priority</th>
 								<th>Status</th>
+								<th>Detail</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="complaint" items="${complaints }">
+							<c:forEach var="complaint" items="${complaints}">
 								<tr>
 									<td>${complaint.id}</td>
 									<td>${complaint.firstname}</td>
@@ -501,6 +326,7 @@
 									<td>${complaint.assignto}</td>
 									<td>${complaint.priority}</td>
 									<td>${complaint.status}</td>
+									<td><a href="/getStatus?id=${complaint.id}">Procced</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
