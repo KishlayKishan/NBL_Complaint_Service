@@ -1,6 +1,7 @@
 package com.easybank.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,7 @@ public class BankController {
 	}
 	
 	@RequestMapping("/welcome")
-	public String Welcome(HttpServletRequest request) {
+	public String Welcome(HttpServletRequest request,HttpSession session) {
 		request.setAttribute("mode", "MODE_HOME");
 		return "welcomepage";
 	}
@@ -40,7 +41,7 @@ public class BankController {
 	@PostMapping("/save-user")
 	public String registerUser(@ModelAttribute User user, BindingResult bindingResult, HttpServletRequest request) {
 		userService.saveUser(user);
-		request.setAttribute("mode","MODE_HOME" );
+		request.setAttribute("mode","MODE_LOGIN" );
 		return "welcomepage";
 	}
 	
@@ -73,8 +74,12 @@ public class BankController {
 	}
 	
 	@RequestMapping("/login-user")
-	public String loginUser(@ModelAttribute User user, HttpServletRequest request ) {
-		if(userService.findByUsernameAndPassword(user.getUsername(), user.getPassword())!=null) {
+	public String loginUser(@ModelAttribute User user, HttpServletRequest request,HttpSession httpSession ) {
+		User userLoginCheck=userService.findByUsernameAndPassword(user.getUsername(), user.getPassword());
+		if(userLoginCheck!=null) {
+			httpSession.setAttribute("user_name", userLoginCheck.getEmailid());
+			httpSession.setAttribute("user_role", "USER");
+			httpSession.setAttribute("id", userLoginCheck.getId());
 			request.setAttribute("mode", "MODE_HOME");
 			return "homepage";
 		}
@@ -86,7 +91,8 @@ public class BankController {
 	}
 	
 	@RequestMapping("/logout")
-	public String logout(HttpServletRequest request) {
+	public String logout(HttpServletRequest request,HttpSession httpSession) {
+		httpSession.invalidate();
 		request.setAttribute("mode", "MODE_HOME");
 		return "welcomepage";
 	}

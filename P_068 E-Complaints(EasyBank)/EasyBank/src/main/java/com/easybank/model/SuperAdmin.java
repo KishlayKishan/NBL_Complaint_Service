@@ -5,13 +5,12 @@ package com.easybank.model;
 import lombok.Data;
 
 import javax.persistence.*;
-//import javax.persistence.Id;
-//import javax.persistence.Table;
+
 
 @Data
 @Entity
-@Table(name="adminlog")
-public class Admin {
+@Table(name="super_admin_log")
+public class SuperAdmin {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
@@ -25,14 +24,17 @@ public class Admin {
 	@Column(unique = true)
 	private String emailid;
 	private String password;
+	private String department; 
+	private String position;
 	
 	
-	public Admin() {
+	public SuperAdmin() {
 		super();
 	}
 
-	public Admin(String username, String firstname, String lastname, String branchname, String location,
-			String mobileno, String emailid, String password) {
+
+	public SuperAdmin(String username, String firstname, String lastname, String branchname, String location,
+			String mobileno, String emailid, String password, String department, String position) {
 		super();
 		this.username = username;
 		this.firstname = firstname;
@@ -42,6 +44,9 @@ public class Admin {
 		this.mobileno = mobileno;
 		this.emailid = emailid;
 		this.password = password;
+		this.department = department;
+		this.position = position;
 	}
+
 
 }

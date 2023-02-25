@@ -1,5 +1,5 @@
 <!DOCTYPE html >
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 <meta charset="utf-8">
@@ -13,21 +13,10 @@
 
 </head>
 <body>
-	<div role="navigation">
-		<div class="navbar navbar-inverse">
-			<a href="/welcome" class="navbar-brand">Nainital Bank Ltd</a>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li><a href="/checkStatus">Check Status</a></li>
-					<li><a href="/contact">Contact Us</a></li>
-					<li><a href="/logout">Logout</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-
+	<c:import url="navbar.jsp" />
+	<!-- ${sessionScope.user_role} -->
 	<c:choose>
-		<c:when test="${mode=='MODE_HOME' }">
+		<c:when test="${mode=='MODE_HOME'}">
 			<div class="container" id="homediv">
 				<div class="jumbotron text-center">
 					<h1>Welcome to Nainital Bank Ltd</h1>

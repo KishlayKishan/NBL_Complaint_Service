@@ -14,16 +14,16 @@ import com.easybank.model.Complaint;
 @Service
 @Transactional
 public class ComplaintService {
-	
+
 	private final ComplaintRepository complaintRepo;
 
 	public ComplaintService(ComplaintRepository complaintRepo) {
 		this.complaintRepo = complaintRepo;
 	}
-	
+
 	public void updateComplaint(Complaint complaint) {
-		Optional<Complaint> complaintCheck=complaintRepo.findById(complaint.getId());
-		complaintCheck.ifPresent((Complaint c)->{
+		Optional<Complaint> complaintCheck = complaintRepo.findById(complaint.getId());
+		complaintCheck.ifPresent((Complaint c) -> {
 			c.setAssigndate(complaint.getAssigndate());
 			c.setBranch(complaint.getBranch());
 			c.setCategory(complaint.getCategory());
@@ -35,43 +35,49 @@ public class ComplaintService {
 			c.setStatus(complaint.getStatus());
 			c.setPriority(complaint.getPriority());
 			c.setAssignto(complaint.getAssignto());
+			c.setFeedback(complaint.getFeedback());
 			complaintRepo.save(c);
 		});
 	}
-	
+
+	public void markForSuperAdmin(Integer complaintId, Integer superAdminId) {
+		Optional<Complaint> complaintCheck = complaintRepo.findById(complaintId);
+		complaintCheck.ifPresent((Complaint c) -> {
+			c.setIsMarkedForSuperAdmin(superAdminId);
+			complaintRepo.save(c);
+		});
+	}
+
 	public void saveComplaint(Complaint complaint) {
 		complaintRepo.save(complaint);
 	}
-	
+
 	public List<Complaint> showAllComplaints() {
 		List<Complaint> complaints = new ArrayList<Complaint>();
-		for(Complaint complaint : complaintRepo.findAll()) {
+		for (Complaint complaint : complaintRepo.findAll()) {
 			complaints.add(complaint);
 		}
-		
+
 		return complaints;
-		}
-	
+	}
+
 	public Complaint editStatus(int id) {
 		return complaintRepo.findById(id).orElse(new Complaint());
-		}
-	
+	}
+
 	public void deleteComplaint(int id) {
 		complaintRepo.deleteById(id);
 	}
-	
+
 	public List<Complaint> checkStatus() {
 		List<Complaint> complaints = new ArrayList<Complaint>();
-		for(Complaint complaint : complaintRepo.findAll()) {
+		for (Complaint complaint : complaintRepo.findAll()) {
 			complaints.add(complaint);
 		}
 		return complaints;
 	}
-	
+
 	public Complaint getComplaintById(int cid) {
 		return complaintRepo.findById(cid).get();
 	}
 }
-
-
-

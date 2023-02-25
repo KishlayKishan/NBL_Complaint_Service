@@ -17,6 +17,8 @@ import com.easybank.service.ComplaintService;
 public class ComplaintController {
 	@Autowired
 	ComplaintService complaintService;
+	@Autowired
+	private ComplaintService adminService;
 	
 	@RequestMapping("/get-form")
 	public String getForm(HttpServletRequest request ) {
@@ -34,6 +36,7 @@ public class ComplaintController {
 	@PostMapping("/update-complaint")
 	public String updateComplaint(@ModelAttribute Complaint complaint, BindingResult bindingResult, HttpServletRequest request) {
 		complaintService.updateComplaint(complaint);
+		request.setAttribute("complaints", adminService.showAllComplaints());
 		request.setAttribute("mode", "ALL_COMPLAINTS");
 		return "complaints";
 	}

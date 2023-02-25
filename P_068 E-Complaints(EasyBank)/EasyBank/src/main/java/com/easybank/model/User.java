@@ -1,21 +1,27 @@
 package com.easybank.model;
 
-import com.easybank.dao.UserRepository;
-import lombok.Data;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import com.easybank.dao.UserRepository;
 
 
 @Entity
 @Table(name="userdetails")
 public class User {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	@Column(unique = true)
 	private String username;
 	private String firstname;
 	private String lastname;
 	private String mobileno;
+	@Column(unique = true)
 	private String emailid;
 	private String password;
 	

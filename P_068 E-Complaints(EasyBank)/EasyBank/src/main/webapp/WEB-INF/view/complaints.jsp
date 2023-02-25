@@ -1,5 +1,5 @@
 <!DOCTYPE html >
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 <meta charset="utf-8">
@@ -14,19 +14,8 @@
 </head>
 
 <body>
-	<div role="navigation">
-		<div class="navbar navbar-inverse">
-			<a href="/welcome" class="navbar-brand">Nainital Bank Ltd</a>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li><a href="/show-complaints">All Complaints</a></li>
-					<li><a href="/adminRegistration">Admin Registration</a></li>
-					<li><a href="/logout">Logout</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-
+	
+	<c:import url="navbar.jsp" />
 	<c:choose>
 		<c:when test="${mode=='MODE_HOME' }">
 			<div class="container" id="homediv">
@@ -55,11 +44,19 @@
 			</div>
 		</c:when>
 
-		<c:when test="${mode=='MODE_REGISTER' }">
+		<c:when test="${mode=='MODE_REGISTER' || mode=='MODE_REGISTER_SUPER_ADMIN'}">
 			<div class="container text-center">
-				<h3>Admin Registration</h3>
+				
+				<c:if test="${mode == 'MODE_REGISTER_SUPER_ADMIN'}">
+					<h3>Super Admin Registration</h3>
+					<form class="form-horizontal" method="POST" action="${path}">
+				</c:if>
+				<c:if test="${mode == 'MODE_REGISTER'}">
+					<h3>Admin Registration</h3>
+					<form class="form-horizontal" method="POST" action="save-admin">
+				</c:if>
+				
 				<hr>
-				<form class="form-horizontal" method="POST" action="save-admin">
 					<input type="hidden" name="id" value="${admin.id }" />
 					<div class="form-group">
 						<label class="control-label col-md-3">Username</label>
@@ -94,7 +91,6 @@
 								required="required" value="${admin.branchname }" />
 						</div>
 					</div>
-
 					<div class="form-group">
 						<label class="control-label col-md-3">Location</label>
 						<div class="col-md-7">
@@ -103,6 +99,7 @@
 								required="required" value="${admin.location }" />
 						</div>
 					</div>
+					
 					<div class="form-group">
 						<label class="control-label col-md-3">Mobile No. </label>
 						<div class="col-md-3">
@@ -128,7 +125,24 @@
 								value="${admin.password }" />
 						</div>
 					</div>
-
+					<c:if test="${mode == 'MODE_REGISTER_SUPER_ADMIN'}">
+						<div class="form-group">
+							<label class="control-label col-md-3">Department</label>
+							<div class="col-md-7">
+								<input type="text" class="form-control" name="department"
+									id="department" placeholder="Enter your Department"
+									required="required" value="${admin.department}" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Position</label>
+							<div class="col-md-7">
+								<input type="text" class="form-control" name="position"
+									id="position" placeholder="Enter your Position"
+									required="required" value="${admin.position}" />
+							</div>
+						</div>
+					</c:if>
 					<div class="form-group ">
 						<input type="submit" class="btn btn-primary" value="Register" />
 					</div>
@@ -136,11 +150,18 @@
 			</div>
 		</c:when>
 
-		<c:when test="${mode=='MODE_LOGIN' }">
+		<c:when test="${mode=='MODE_LOGIN' || mode=='MODE_LOGIN_SUPER_ADMIN'}">
 			<div class="container text-center">
-				<h3>Admin Login</h3>
+
+				<c:if test="${mode == 'MODE_LOGIN_SUPER_ADMIN'}">
+					<h3>Super Admin Login</h3>
+					<form class="form-horizontal" method="POST" action="${path}">
+				</c:if>
+				<c:if test="${mode == 'MODE_LOGIN'}">
+					<h3>Admin Login</h3>
+					<form class="form-horizontal" method="POST" action="/login-admin">
+				</c:if>
 				<hr>
-				<form class="form-horizontal" method="POST" action="/login-admin">
 					<c:if test="${not empty error }">
 						<div class="alert alert-danger">
 							<c:out value="${error }"></c:out>
@@ -210,9 +231,9 @@
 									<td>${complaint.assigndate}</td>
 								    <td>${complaint.priority}</td>
 									<td>${complaint.status}</td>
-									<td><a href="/edit-status?id=${complaint.id }"><span
+									<td><a href="/edit-status?id=${complaint.id}"><span
 											class="glyphicon glyphicon-pencil"></span></a></td>
-									<td><a href="/delete-complaint?id=${complaint.id }"><span
+									<td><a href="/delete-complaint?id=${complaint.id}"><span
 											class="glyphicon glyphicon-trash"></span></a></td>
 
 								</tr>
@@ -225,7 +246,7 @@
 		</c:when>
 		<c:when test="${mode=='MODE_UPDATE'}">
 			<div class="container text-center">
-				<h3>Update User</h3>
+				<h3>Update Complain</h3>
 				<hr>
 				<form class="form-horizontal" method="POST" action="update-complaint">
 					<input type="hidden" name="id" value="${complaint.id }" />
@@ -392,7 +413,7 @@
 							<textarea  type="text" class="form-control" name="details"
 								id="details" placeholder="Describe Your Complaint in Brief..."
 								cols="40" rows="1"
-								required="required" value="${complaint.details}">
+								required="required">${complaint.details}
 							</textarea>
 						</div>
 					</div>
@@ -430,23 +451,78 @@
 					<div class="form-group">
                     						<label class="control-label col-md-3">Set Assign Date</label>
                     						<div class="col-md-7">
-                    							<input type="text" class="form-control" name="Assign Date"
+                    							<input type="date" class="form-control" name="assigndate"
                     								id="Assign Date" placeholder="__/__/____" required="required"
                     								value="${complaint.assigndate}">
                     						</div>
                     					</div>
 					<div class="form-group">
-						<label class="control-label col-md-3">Set Status/Closed Date</label>
+						<!-- <label class="control-label col-md-3">Set Status/Closed Date</label>
 						<div class="col-md-7">
 							<input type="text" class="form-control" name="status" id="status"
 								placeholder="Open/Closed (Closed Date)" required="required"
 								value="${complaint.status}">
+						</div> -->
+						<label class="control-label col-md-3">Set Status/Closed Date</label>
+						<div class="col-md-7">
+							<select input type="text" class="form-control" name="status"
+								id="status" placeholder="Open/Closed (Closed Date)"
+								required="required"
+								value="${complaint.status}">
+								<option value="Open">Open</option>
+								<option value="Closed">Closed</option>
+							</select>
 						</div>
 					</div>
+					<c:if test="${sessionScope.user_role == 'SUPER_ADMIN'}">	
+					<div class="form-group">
+						<label class="control-label col-md-3">Feedback</label>
+						<div class="col-md-7">
+							<textarea  type="text" class="form-control" name="feedback"
+								id="feedback" placeholder="Give Feedback..."
+								cols="40" rows="5"
+								required="required">
+								${complaint.feedback}
+							</textarea>
+						</div>
+					</div>
+					</c:if>
 					<div class="form-group ">
-						<input type="submit" class="btn btn-primary" value="Update" />
+						<c:if test="${sessionScope.user_role != 'SUPER_ADMIN'}">
+							<input type="submit" class="btn btn-primary" value="Submit" />	
+							<input type="submit" formaction="/get-all-superAdmin?id=${complaint.id}" class="btn btn-primary" value="Forward" />
+						</c:if>
+						<c:if test="${sessionScope.user_role == 'SUPER_ADMIN'}">
+							<input type="submit" class="btn btn-primary" value="Submit" />	
+						</c:if>
 					</div>
 				</form>
+			</div>
+		</c:when>
+
+		
+		<c:when test="${mode=='MODE_FORWARD_TO_SUPERADMIN'}">
+			<div class="container text-center">
+				<h3>Forward complaint to Super Admins</h3>
+				<hr>
+				<form class="form-horizontal" method="POST" action="forward-to-super-admin">
+				<input type="hidden" name="complaintId" value="${complainId}" />
+				<div class="form-group">
+					<label class="control-label col-md-3">Select Super Admin to whom you want to forward complain:</label>
+					<div class="col-md-7">
+						<select input type="text" class="form-control" name="superAdminId"
+							id="superAdminId" placeholder="Select Super Admin"
+							required="required">
+							<c:forEach items="${superAdmins}" var="superAdmin">
+								<option value="${superAdmin.id}">${superAdmin.id} - ${superAdmin.firstname} ${superAdmin.lastname}</option>
+							  </c:forEach>
+						</select>
+					</div>
+				</div>
+				<div class="form-group ">
+					<input type="submit" class="btn btn-primary" value="Submit" />
+				</div>
+			</form>
 			</div>
 		</c:when>
 
