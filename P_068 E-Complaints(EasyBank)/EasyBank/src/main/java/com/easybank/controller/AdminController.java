@@ -97,7 +97,18 @@ public class AdminController {
 		request.setAttribute("mode", "MODE_UPDATE");
 		return "complaints";
 	}
-	
+	/*@RequestMapping("/roleback-to-user")
+	public String rollbacktouser(@RequestParam int complaintId,@RequestParam int userId,HttpServletRequest request ) throws Exception {
+		User User=UserService.UserById(UserId);
+		if(User==null) {
+			throw new Exception("User Does not Exists!");
+		}
+		complaintService.markForUser(complaintId,User.getId());
+		request.setAttribute("complaint", adminService.editStatus(complaintId));
+		request.setAttribute("mode", "MODE_UPDATE");
+		return "complaints";
+	} */
+
 	@RequestMapping("/delete-complaint")
 	public String deleteComplaint(@RequestParam int id, HttpServletRequest request ) {
 		adminService.deleteComplaint(id);

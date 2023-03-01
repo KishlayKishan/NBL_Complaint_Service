@@ -202,6 +202,7 @@
 								<th>First Name</th>
 								<th>Last Name</th>
 								<th>Email ID</th>
+								<th>Date</th>
 								<th>Account No</th>
 								<th>Category</th>
 								<th>Sub Category</th>
@@ -211,6 +212,7 @@
 								<th>Assigndate</th>
 								<th>Priority</th>
 								<th>Status</th>
+								<th>Closed-Date</th>
 								<th>Edit</th>
 								<th>Delete</th>
 							</tr>
@@ -222,6 +224,7 @@
 									<td>${complaint.firstname}</td>
 									<td>${complaint.lastname}</td>
 									<td>${complaint.emailid}</td>
+									<td>${complaint.date}</td>
 									<td>${complaint.accountno}</td>
 									<td>${complaint.category}</td>
 									<td>${complaint.subcategory}</td>
@@ -231,6 +234,7 @@
 									<td>${complaint.assigndate}</td>
 								    <td>${complaint.priority}</td>
 									<td>${complaint.status}</td>
+									<td>$complaint.closeddate}</td>
 									<td><a href="/edit-status?id=${complaint.id}"><span
 											class="glyphicon glyphicon-pencil"></span></a></td>
 									<td><a href="/delete-complaint?id=${complaint.id}"><span
@@ -283,6 +287,16 @@
 								value="${complaint.emailid }" />
 						</div>
 					</div>
+
+					<div class="form-group">
+                                        						<label class="control-label col-md-3">Date</label>
+                                        						<div class="col-md-7">
+                                        							<input type="date" class="form-control" name="date"
+                                        								id="Date" placeholder="__/__/____" required="required"
+                                        								value="${complaint.date}">
+                                        						</div>
+                                        					</div>
+
 					<div class="form-group">
 						<label class="control-label col-md-3">Account No</label>
 						<div class="col-md-7">
@@ -449,7 +463,7 @@
                                         						</div>
                                         					</div>
 					<div class="form-group">
-                    						<label class="control-label col-md-3">Set Assign Date</label>
+                    						<label class="control-label col-md-3">Assign Date</label>
                     						<div class="col-md-7">
                     							<input type="date" class="form-control" name="assigndate"
                     								id="Assign Date" placeholder="__/__/____" required="required"
@@ -457,32 +471,44 @@
                     						</div>
                     					</div>
 					<div class="form-group">
-						<!-- <label class="control-label col-md-3">Set Status/Closed Date</label>
-						<div class="col-md-7">
+						<!-- <label class="control-label col-md-3">Status</label>
+						<div class="col-md-5">
 							<input type="text" class="form-control" name="status" id="status"
-								placeholder="Open/Closed (Closed Date)" required="required"
+								placeholder="Open/Closed" required="required"
 								value="${complaint.status}">
 						</div> -->
-						<label class="control-label col-md-3">Set Status/Closed Date</label>
+
+						<div class="form-group">
+                              <label class="control-label col-md-3">Closed Date</label>
+                               <div class="col-md-7">
+                               <input type="closeddate" class="form-control" name="closeddate"
+                                     id="Closed Date" placeholder="__/__/____" required="required"
+                                      value="${complaint.closeddate}">
+                                 </div>
+                               </div>
+
+						<label class="control-label col-md-3">Status</label>
 						<div class="col-md-7">
 							<select input type="text" class="form-control" name="status"
-								id="status" placeholder="Open/Closed (Closed Date)"
+								id="status" placeholder="Open/Closed"
 								required="required"
 								value="${complaint.status}">
 								<option value="Open">Open</option>
 								<option value="Closed">Closed</option>
 							</select>
 						</div>
+
+
 					</div>
 					<c:if test="${sessionScope.user_role == 'SUPER_ADMIN'}">	
 					<div class="form-group">
-						<label class="control-label col-md-3">Feedback</label>
+						<label class="control-label col-md-3">Review</label>
 						<div class="col-md-7">
-							<textarea  type="text" class="form-control" name="feedback"
-								id="feedback" placeholder="Give Feedback..."
+							<textarea  type="text" class="form-control" name="Review"
+								id="Review" placeholder="Write Review For This Complaint..."
 								cols="40" rows="5"
 								required="required">
-								${complaint.feedback}
+								${complaint.review}
 							</textarea>
 						</div>
 					</div>

@@ -35,7 +35,7 @@ public class ComplaintService {
 			c.setStatus(complaint.getStatus());
 			c.setPriority(complaint.getPriority());
 			c.setAssignto(complaint.getAssignto());
-			c.setFeedback(complaint.getFeedback());
+			c.setReview(complaint.getReview());
 			complaintRepo.save(c);
 		});
 	}
