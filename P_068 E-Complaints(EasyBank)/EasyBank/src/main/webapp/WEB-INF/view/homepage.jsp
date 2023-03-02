@@ -272,6 +272,28 @@
 						</div>
 					</div>
 					
+				<c:if test="${complaint.step == 'ADMIN_ROLLBACK_TO_USER' }">
+					<form class="form-horizontal" method="POST" action="user-update-complaint">
+						<input type="hidden" name="id" value="${complaint.id}" />
+						<div class="form-group">
+							<label class="control-label col-md-3">Deatils</label>
+							<div class="col-md-7">
+								<textarea  type="text" class="form-control" name="details"
+									id="details" placeholder="Details..."
+									cols="40" rows="5"
+									required="required">
+									${complaint.details}
+								</textarea>
+							</div>
+						</div>
+						
+						<div class="form-group ">
+							<input type="submit" class="btn btn-primary" formmethod="POST" formaction="/user-update-complaint" value="Submit" />
+							<input type="submit" formnovalidate class="btn btn-primary" formmethod="POST" formaction="/request-to-close?id=${complaint.id}" value="Request to close" />
+						</div>	
+					</form>
+				</c:if>
+					
 				</form>
 			</div>
 

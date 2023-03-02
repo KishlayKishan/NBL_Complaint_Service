@@ -98,14 +98,6 @@ public class AdminController {
 		return "complaints";
 	}
 	
-	@RequestMapping("/rollback-to-user")
-	public String rollbackToUser(@RequestParam int complaintId,HttpServletRequest request ) throws Exception {
-		adminService.rollbackToUser(complaintId);
-		request.setAttribute("complaint", adminService.editStatus(complaintId));
-		request.setAttribute("mode", "MODE_UPDATE");
-		return "complaints";
-	}
-
 	@RequestMapping("/delete-complaint")
 	public String deleteComplaint(@RequestParam int id, HttpServletRequest request ) {
 		adminService.deleteComplaint(id);

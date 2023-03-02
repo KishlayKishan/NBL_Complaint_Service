@@ -22,7 +22,8 @@ public class BankController {
 	UserService userService;
 	
 	@RequestMapping("/home")
-	public String Hello() {
+	public String Hello(HttpServletRequest request) {
+		request.setAttribute("mode", "MODE_HOME");
 		return "homepage";
 	}
 	

@@ -213,6 +213,7 @@
 								<th>Priority</th>
 								<th>Status</th>
 								<th>Closed-Date</th>
+								<th>Complaint step</th>
 								<th>Edit</th>
 								<th>Delete</th>
 							</tr>
@@ -234,7 +235,8 @@
 									<td>${complaint.assigndate}</td>
 								    <td>${complaint.priority}</td>
 									<td>${complaint.status}</td>
-									<td>$complaint.closeddate}</td>
+									<td>${complaint.closeddate}</td>
+									<td>${complaint.step}</td>
 									<td><a href="/edit-status?id=${complaint.id}"><span
 											class="glyphicon glyphicon-pencil"></span></a></td>
 									<td><a href="/delete-complaint?id=${complaint.id}"><span
@@ -289,13 +291,13 @@
 					</div>
 
 					<div class="form-group">
-                                        						<label class="control-label col-md-3">Date</label>
-                                        						<div class="col-md-7">
-                                        							<input type="date" class="form-control" name="date"
-                                        								id="Date" placeholder="__/__/____" required="required"
-                                        								value="${complaint.date}">
-                                        						</div>
-                                        					</div>
+						<label class="control-label col-md-3">Date</label>
+						<div class="col-md-7">
+							<input type="date" class="form-control" name="date"
+								id="Date" placeholder="__/__/____" required="required"
+								value="${complaint.date}">
+						</div>
+					</div>
 
 					<div class="form-group">
 						<label class="control-label col-md-3">Account No</label>
@@ -433,43 +435,43 @@
 					</div>
 
 					<div class="form-group">
-                    						<label class="control-label col-md-3">Assign
-                    							To</label>
-                    						<div class="col-md-7">
-                    							<select input type="text" class="form-control" name="assignto"
-                    								id="Assign To" placeholder="Complaint is Assign to ?"
-                    								required="required"
-                    								value="${complaint.assignto}">
-                    								<option value="Person 1">Person 1</option>
-                    								<option value="Person 2">Person 2</option>
-                    								<option value="Person 3">Person 3</option>
-                    								<option value="Person 4">Person 4</option>
-                    								<option value="Person 5">Person 5</option>
-                    							</select>
-                    						</div>
-                    					</div>
+						<label class="control-label col-md-3">Assign
+							To</label>
+						<div class="col-md-7">
+							<select input type="text" class="form-control" name="assignto"
+								id="Assign To" placeholder="Complaint is Assign to ?"
+								required="required"
+								value="${complaint.assignto}">
+								<option value="Person 1">Person 1</option>
+								<option value="Person 2">Person 2</option>
+								<option value="Person 3">Person 3</option>
+								<option value="Person 4">Person 4</option>
+								<option value="Person 5">Person 5</option>
+							</select>
+						</div>
+					</div>
 
                     <div class="form-group">
-                                        <label class="control-label col-md-3">Priority</label>
-                                        						<div class="col-md-7">
-                                        							<select input type="text" class="form-control" name="priority"
-                                        								id="priority" placeholder="Priority Of Complaint"
-                                        								required="required"
-                                        								value="${complaint.priority}">
-                                        								<option value="Low">Low</option>
-                                        								<option value="Moderate">Moderate</option>
-                                        								<option value="High">High</option>
-                                        							</select>
-                                        						</div>
-                                        					</div>
+						<label class="control-label col-md-3">Priority</label>
+						<div class="col-md-7">
+							<select input type="text" class="form-control" name="priority"
+								id="priority" placeholder="Priority Of Complaint"
+								required="required"
+								value="${complaint.priority}">
+								<option value="Low">Low</option>
+								<option value="Moderate">Moderate</option>
+								<option value="High">High</option>
+							</select>
+						</div>
+					</div>
 					<div class="form-group">
-                    						<label class="control-label col-md-3">Assign Date</label>
-                    						<div class="col-md-7">
-                    							<input type="date" class="form-control" name="assigndate"
-                    								id="Assign Date" placeholder="__/__/____" required="required"
-                    								value="${complaint.assigndate}">
-                    						</div>
-                    					</div>
+						<label class="control-label col-md-3">Assign Date</label>
+						<div class="col-md-7">
+							<input type="date" class="form-control" name="assigndate"
+								id="Assign Date" placeholder="__/__/____" required="required"
+								value="${complaint.assigndate}">
+						</div>
+					</div>
 					<div class="form-group">
 						<!-- <label class="control-label col-md-3">Status</label>
 						<div class="col-md-5">
@@ -481,7 +483,7 @@
 						<div class="form-group">
                               <label class="control-label col-md-3">Closed Date</label>
                                <div class="col-md-7">
-                               <input type="closeddate" class="form-control" name="closeddate"
+                               <input type="date" class="form-control" name="closeddate"
                                      id="Closed Date" placeholder="__/__/____" required="required"
                                       value="${complaint.closeddate}">
                                  </div>
@@ -515,6 +517,7 @@
 					</c:if>
 					<div class="form-group ">
 						<c:if test="${sessionScope.user_role != 'SUPER_ADMIN'}">
+							<input type="submit" formaction="/rollback-to-user?complaintId=${complaint.id}" formnovalidate class="btn btn-primary" value="Rollback to User" />
 							<input type="submit" class="btn btn-primary" value="Submit" />	
 							<input type="submit" formaction="/get-all-superAdmin?id=${complaint.id}" class="btn btn-primary" value="Forward" />
 						</c:if>

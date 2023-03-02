@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.easybank.dao.AdminRepository;
 import com.easybank.dao.ComplaintRepository;
+import com.easybank.enums.ComplaintActions;
 import com.easybank.model.Admin;
 import com.easybank.model.Complaint;
 
@@ -36,9 +37,7 @@ public class AdminService {
 
 	public List<Complaint> showAllComplaints() {
 		List<Complaint> complaints = new ArrayList<Complaint>();
-		for (Complaint complaint : complaintRepo.findAll()) {
-			complaints.add(complaint);
-		}
+		complaints = complaintRepo.findAll();
 
 		return complaints;
 	}
@@ -49,11 +48,19 @@ public class AdminService {
 
 	public void deleteComplaint(int id) {
 		complaintRepo.deleteById(id);
-		;
 	}
 
-    public void complainstatus(int id) {
+	public void complainstatus(int id) {
 		complaintRepo.findById(id);
+
+	}
+
+	public void rollbackToUser(int id) {
+		Optional<Complaint> complaintCheck = complaintRepo.findById(id);
+		complaintCheck.ifPresent((Complaint c) -> {
+			c.setStep(ComplaintActions.ADMIN_ROLLBACK_TO_USER);
+			complaintRepo.save(c);
+		});
 
 	}
 }
