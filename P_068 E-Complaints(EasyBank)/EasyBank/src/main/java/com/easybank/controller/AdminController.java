@@ -71,15 +71,15 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/edit-status")
-	public String editStatus(@RequestParam int id,HttpServletRequest request ) {
+	public String editStatus(@RequestParam String id,HttpServletRequest request ,HttpSession httpSession) {
 		request.setAttribute("complaint", adminService.editStatus(id));
 		request.setAttribute("mode", "MODE_UPDATE");
-		//request.setAttribute("mode", "MODE_COMPLAINTS");
+		request.setAttribute("allAdmins", adminService.getAllAdminExceptMe((int)httpSession.getAttribute("id")));
 		return "complaints";
 	}
 	
 	@RequestMapping("/get-all-superAdmin")
-	public String getAllSuperAdmin(@RequestParam int id,HttpServletRequest request ) {
+	public String getAllSuperAdmin(@RequestParam String id,HttpServletRequest request ) {
 		request.setAttribute("superAdmins", superAdminService.getAllSuperAdmin());
 		request.setAttribute("mode", "MODE_FORWARD_TO_SUPERADMIN");
 		request.setAttribute("complainId", id);
@@ -87,7 +87,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/forward-to-super-admin")
-	public String forwardToSuperAdmin(@RequestParam int complaintId,@RequestParam int superAdminId,HttpServletRequest request ) throws Exception {
+	public String forwardToSuperAdmin(@RequestParam String complaintId,@RequestParam int superAdminId,HttpServletRequest request ) throws Exception {
 		SuperAdmin superAdmin=superAdminService.getAdminById(superAdminId);
 		if(superAdmin==null) {
 			throw new Exception("Super Admin Does not Exists!");
@@ -99,7 +99,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/rollback-to-user")
-	public String rollbackToUser(@RequestParam int complaintId,HttpServletRequest request ) throws Exception {
+	public String rollbackToUser(@RequestParam String complaintId,HttpServletRequest request ) throws Exception {
 		adminService.rollbackToUser(complaintId);
 		request.setAttribute("complaint", adminService.editStatus(complaintId));
 		request.setAttribute("mode", "MODE_UPDATE");
@@ -107,7 +107,7 @@ public class AdminController {
 	}
 
 	@RequestMapping("/delete-complaint")
-	public String deleteComplaint(@RequestParam int id, HttpServletRequest request ) {
+	public String deleteComplaint(@RequestParam String id, HttpServletRequest request ) {
 		adminService.deleteComplaint(id);
 		request.setAttribute("complaint", adminService.showAllComplaints());
 		request.setAttribute("mode", "All_COMPLAINTS");

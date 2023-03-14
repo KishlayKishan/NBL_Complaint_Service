@@ -1,8 +1,11 @@
 package com.easybank.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -42,25 +45,47 @@ public class AdminService {
 		return complaints;
 	}
 
-	public Complaint editStatus(int id) {
+	public Complaint editStatus(String id) {
 		return complaintRepo.findById(id).orElse(new Complaint());
 	}
+	
+	public List<Admin> getAllAdminExceptMe(int id) {
+		if(id==-1) {
+			return adminRepo.findAll();
+		}else {
+			return adminRepo.findAll().stream().filter(x->x.getId()!=id).collect(Collectors.toList());
+		}
+	}
 
-	public void deleteComplaint(int id) {
+	public void deleteComplaint(String id) {
 		complaintRepo.deleteById(id);
 	}
 
-	public void complainstatus(int id) {
+	public void complainstatus(String id) {
 		complaintRepo.findById(id);
 
 	}
 
-	public void rollbackToUser(int id) {
+	public void rollbackToUser(String id) {
 		Optional<Complaint> complaintCheck = complaintRepo.findById(id);
 		complaintCheck.ifPresent((Complaint c) -> {
 			c.setStep(ComplaintActions.ADMIN_ROLLBACK_TO_USER);
+			c.setLastUpdateDate(LocalDateTime.now());
 			complaintRepo.save(c);
 		});
 
+	}
+	
+	public List<Complaint> getAllComplaintsNotAssignedToAnyOne(){
+		return complaintRepo.findAllByAssigntoIsNull();
+	}
+	
+	public void assignToRandomAdmins(Complaint complaint,Admin admin) {
+		Optional<Complaint> complaintCheck = complaintRepo.findById(complaint.getId());
+		complaintCheck.ifPresent((Complaint c) -> {
+			c.setAssignto(""+admin.getId());
+			c.setAssigndate(LocalDate.now());
+			complaintRepo.save(c);
+		});
 	}
 }

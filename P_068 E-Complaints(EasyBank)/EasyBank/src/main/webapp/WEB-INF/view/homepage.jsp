@@ -319,7 +319,8 @@
 								<th>assignto</th>
 								<th>Priority</th>
 								<th>Status</th>
-								<th>Detail</th>
+								<th>lastUpdateDate</th>
+								<th>Edit/View</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -337,6 +338,7 @@
 									<td>${complaint.assignto}</td>
 									<td>${complaint.priority}</td>
 									<td>${complaint.status}</td>
+									<td>${complaint.lastUpdateDate}</td>
 									<td><a href="/getStatus?id=${complaint.id}">Procced</a></td>
 								</tr>
 							</c:forEach>

@@ -1,5 +1,6 @@
 package com.easybank.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,11 +39,12 @@ public class ComplaintService {
 			c.setPriority(complaint.getPriority());
 			c.setAssignto(complaint.getAssignto());
 			c.setReview(complaint.getReview());
+			c.setLastUpdateDate(LocalDateTime.now());
 			complaintRepo.save(c);
 		});
 	}
 
-	public void markForSuperAdmin(Integer complaintId, Integer superAdminId) {
+	public void markForSuperAdmin(String complaintId, Integer superAdminId) {
 		Optional<Complaint> complaintCheck = complaintRepo.findById(complaintId);
 		complaintCheck.ifPresent((Complaint c) -> {
 			c.setStep(ComplaintActions.MOVED_TO_SUPER_ADMIN);
@@ -63,11 +65,11 @@ public class ComplaintService {
 		return complaints;
 	}
 
-	public Complaint editStatus(int id) {
+	public Complaint editStatus(String id) {
 		return complaintRepo.findById(id).orElse(new Complaint());
 	}
 
-	public void deleteComplaint(int id) {
+	public void deleteComplaint(String id) {
 		complaintRepo.deleteById(id);
 	}
 
@@ -77,7 +79,7 @@ public class ComplaintService {
 		return complaints;
 	}
 
-	public Complaint getComplaintById(int cid) {
+	public Complaint getComplaintById(String cid) {
 		return complaintRepo.findById(cid).get();
 	}
 	
@@ -86,14 +88,16 @@ public class ComplaintService {
 		complaintCheck.ifPresent((Complaint c) -> {
 			c.setDetails(complaint.getDetails());
 			c.setStep(ComplaintActions.USER_UPDATED);
+			c.setLastUpdateDate(LocalDateTime.now());
 			complaintRepo.save(c);
 		});
 	}
 	
-	public void requestToClose(int id) {
+	public void requestToClose(String id) {
 		Optional<Complaint> complaintCheck = complaintRepo.findById(id);
 		complaintCheck.ifPresent((Complaint c) -> {
 			c.setStep(ComplaintActions.USER_REQUEST_TO_CLOSE);
+			c.setLastUpdateDate(LocalDateTime.now());
 			complaintRepo.save(c);
 		});
 	}

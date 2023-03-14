@@ -1,14 +1,18 @@
 package com.easybank.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.easybank.enums.ComplaintActions;
 
@@ -19,8 +23,9 @@ import lombok.Data;
 @Table(name = "complaint")
 public class Complaint implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	@GeneratedValue(generator = "myStringSequenceGenerator")
+    @GenericGenerator(name = "myStringSequenceGenerator", strategy = "com.easybank.model.CustomStringSequenceGenerator")
+	private String id;
 	private String firstname;
 	private String lastname;
 	private String emailid;
@@ -31,7 +36,7 @@ public class Complaint implements Serializable {
 	private String branch;
 	private String details;
 	private String assignto;
-	private String assigndate;
+	private LocalDate assigndate;
 	private String priority;
 	private String status;
 	private String closeddate;
@@ -40,13 +45,16 @@ public class Complaint implements Serializable {
 	private Integer isMarkedForSuperAdmin;
 	@Enumerated(EnumType.STRING)
 	private ComplaintActions step;
+	@Column(columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
+    private LocalDateTime lastUpdateDate=LocalDateTime.now();
 	
-	
-	
-	public Complaint(int id, String firstname, String lastname, String emailid, String accountno, String date,
-			String category, String subcategory, String branch, String details, String assignto, String assigndate,
+	public Complaint() {
+	}
+
+	public Complaint(String id, String firstname, String lastname, String emailid, String accountno, String date,
+			String category, String subcategory, String branch, String details, String assignto, LocalDate assigndate,
 			String priority, String status, String closeddate, String review, Integer userId,
-			Integer isMarkedForSuperAdmin,ComplaintActions step) {
+			Integer isMarkedForSuperAdmin, ComplaintActions step, LocalDateTime lastUpdateDate) {
 		super();
 		this.id = id;
 		this.firstname = firstname;
@@ -66,14 +74,10 @@ public class Complaint implements Serializable {
 		this.review = review;
 		this.userId = userId;
 		this.isMarkedForSuperAdmin = isMarkedForSuperAdmin;
-		this.step=step;
+		this.step = step;
+		this.lastUpdateDate = lastUpdateDate;
 	}
-
-
-
-	public Complaint() {
-	}
-
+	
 	
 
 }

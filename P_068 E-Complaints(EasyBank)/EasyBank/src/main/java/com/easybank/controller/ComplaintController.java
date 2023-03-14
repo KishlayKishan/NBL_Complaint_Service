@@ -60,7 +60,7 @@ public class ComplaintController {
 	}
 	
 	@RequestMapping("/getStatus")
-	public String checkStatus( HttpServletRequest request,@RequestParam("id") int cid) {
+	public String checkStatus( HttpServletRequest request,@RequestParam("id") String cid) {
 		request.setAttribute("complaints", complaintService.getComplaintById(cid));
 		request.setAttribute("mode", "MODE_SHOW_USER_COMPLAINT");
 		return "homepage";
@@ -74,7 +74,7 @@ public class ComplaintController {
 		return "homepage";
 	}
 	@PostMapping("/request-to-close")
-	public String requestToCloseComplaint(@RequestParam("id") int id, HttpServletRequest request) {
+	public String requestToCloseComplaint(@RequestParam("id") String id, HttpServletRequest request) {
 		complaintService.requestToClose(id);
 		request.setAttribute("complaints", complaintService.getComplaintById(id));
 		request.setAttribute("mode", "MODE_SHOW_USER_COMPLAINT");

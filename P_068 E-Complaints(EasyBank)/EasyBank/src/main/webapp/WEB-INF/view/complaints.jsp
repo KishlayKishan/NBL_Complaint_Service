@@ -439,15 +439,13 @@
 							To</label>
 						<div class="col-md-7">
 							<select input type="text" class="form-control" name="assignto"
-								id="Assign To" placeholder="Complaint is Assign to ?"
-								required="required"
-								value="${complaint.assignto}">
-								<option value="Person 1">Person 1</option>
-								<option value="Person 2">Person 2</option>
-								<option value="Person 3">Person 3</option>
-								<option value="Person 4">Person 4</option>
-								<option value="Person 5">Person 5</option>
-							</select>
+							id="assignto" placeholder="Complaint is Assign to ?"
+							required="required">
+							<c:forEach items="${allAdmins}" var="admin">
+								<option value="">--</option>
+								<option value="${admin.id}">${admin.id} - ${admin.firstname} ${admin.lastname}</option>
+							  </c:forEach>
+						</select>
 						</div>
 					</div>
 
