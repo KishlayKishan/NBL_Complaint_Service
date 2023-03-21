@@ -38,6 +38,7 @@ public class ComplaintService {
 			c.setStatus(complaint.getStatus());
 			c.setPriority(complaint.getPriority());
 			c.setAssignto(complaint.getAssignto());
+			c.setCloseddate(complaint.getCloseddate());
 			c.setReview(complaint.getReview());
 			c.setLastUpdateDate(LocalDateTime.now());
 			complaintRepo.save(c);

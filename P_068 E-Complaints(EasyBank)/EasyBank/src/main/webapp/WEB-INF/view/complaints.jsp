@@ -1,5 +1,6 @@
 <!DOCTYPE html >
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
 <meta charset="utf-8">
@@ -255,7 +256,7 @@
 				<h3>Update Complain</h3>
 				<hr>
 				<form class="form-horizontal" method="POST" action="update-complaint">
-					<input type="hidden" name="id" value="${complaint.id }" />
+					<input type="hidden" name="id" value="${complaint.id }"/>
 					<!-- <div class="form-group">
 							<label class="control-label col-md-3">Username</label>
 							<div class="col-md-7">
@@ -269,7 +270,7 @@
 						<div class="col-md-7">
 							<input type="text" class="form-control" name="firstname"
 								id="firstname" placeholder="Enter your firstname"
-								required="required" value="${complaint.firstname }" />
+								required="required" value="${complaint.firstname }" readonly/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -277,7 +278,7 @@
 						<div class="col-md-7">
 							<input type="text" class="form-control" name="lastname"
 								id="lastname" placeholder="Enter your lastname"
-								required="required" value="${complaint.lastname }" />
+								required="required" value="${complaint.lastname }" readonly/>
 						</div>
 					</div>
 
@@ -286,7 +287,7 @@
 						<div class="col-md-3">
 							<input type="email" class="form-control" name="emailid"
 								id="emailid" placeholder="Enter your email" required="required"
-								value="${complaint.emailid }" />
+								value="${complaint.emailid }" readonly/>
 						</div>
 					</div>
 
@@ -295,7 +296,7 @@
 						<div class="col-md-7">
 							<input type="date" class="form-control" name="date"
 								id="Date" placeholder="__/__/____" required="required"
-								value="${complaint.date}">
+								value="${complaint.date}" readonly>
 						</div>
 					</div>
 
@@ -304,7 +305,7 @@
 						<div class="col-md-7">
 							<input type="text" class="form-control" name="accountno"
 								id="accountno" placeholder="Enter account no"
-								required="required" value="${complaint.accountno }" />
+								required="required" value="${complaint.accountno }" readonly/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -312,7 +313,7 @@
                 			<div class="col-md-7">
                             <input type="text" class="form-control" name="Branch"
                                  id="Branch" placeholder="Enter your Branch" required="required"
-                                 value="${complaint.branch }" />
+                                 value="${complaint.branch }" readonly/>
                                 </div>
                      </div>
 					<div class="form-group">
@@ -320,7 +321,7 @@
 						<div class="col-md-7">
 							<select input type="text" class="form-control" name="category"
 								id="category" placeholder="Enter nature of complaint"
-								required="required" value="${complaint.category }">
+								required="required" value="${complaint.category }" readonly>
 								                                <option value="1.Mobile Banking Transactions">1.Mobile Banking Transactions</option>
                                 								<option value="2.Internet Banking Transactions">2.Internet Banking Transactions</option>
                                 								<option value="3.RTGS Transactions">3.RTGS Transactions</option>
@@ -358,7 +359,7 @@
 						<div class="col-md-7">
 							<select input type="text" class="form-control" name="subcategory"
 								id="subcategory" placeholder="Optional" required="required"
-								value="${complaint.subcategory }">
+								value="${complaint.subcategory }" readonly>
 								<option value="1.1 Registration issues">1.1 Registration issues</option>
                                 								<option value="1.2 MMID related issues">1.2 MMID related issues</option>
                                 								<option value="1.3 Login issues">1.3 Login issues</option>
@@ -429,7 +430,7 @@
 							<textarea  type="text" class="form-control" name="details"
 								id="details" placeholder="Describe Your Complaint in Brief..."
 								cols="40" rows="1"
-								required="required">${complaint.details}
+								required="required" readonly>${complaint.details}
 							</textarea>
 						</div>
 					</div>
@@ -440,9 +441,9 @@
 						<div class="col-md-7">
 							<select input type="text" class="form-control" name="assignto"
 							id="assignto" placeholder="Complaint is Assign to ?"
-							required="required">
+							required="required" value="${complaint.assignto}">
 							<c:forEach items="${allAdmins}" var="admin">
-								<option value="">--</option>
+								<option>--</option>
 								<option value="${admin.id}">${admin.id} - ${admin.firstname} ${admin.lastname}</option>
 							  </c:forEach>
 						</select>

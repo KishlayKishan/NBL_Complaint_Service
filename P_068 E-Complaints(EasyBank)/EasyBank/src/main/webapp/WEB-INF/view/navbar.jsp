@@ -10,7 +10,7 @@
 <title>Nainital Bank Ltd | Complaints</title>
 <link href="static/css/bootstrap.min.css" rel="stylesheet">
 <link href="static/css/style.css" rel="stylesheet">
-
+<script src="static/js/bootstrap.min.js"></script>
 </head>
 <body>
     
@@ -33,6 +33,17 @@
             </div>
         </div>
     </c:if>
+<!--global alert added-->
+<c:if test="${not empty UI_MSG}">
+    <div class="alert alert-success" id="custom-alert" role="alert" style="position: absolute;
+    z-index: 2;
+    display: flex;
+    margin: 5% 41%;color: black;
+	border-color: black;">${UI_MSG}</div>
+    <script>setTimeout(function() {
+        document.getElementById("custom-alert").style.display="none"
+    }, 5000);</script>
+</c:if>
 <c:set var="userRole" value="${sessionScope.user_role}" />
 <c:if test="${userRole == 'USER'}">	
 <div role="navigation">

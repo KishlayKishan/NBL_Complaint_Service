@@ -3,6 +3,7 @@ package com.easybank.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -84,7 +85,7 @@ public class AdminService {
 		Optional<Complaint> complaintCheck = complaintRepo.findById(complaint.getId());
 		complaintCheck.ifPresent((Complaint c) -> {
 			c.setAssignto(""+admin.getId());
-			c.setAssigndate(LocalDate.now());
+			c.setAssigndate(new Date());
 			complaintRepo.save(c);
 		});
 	}

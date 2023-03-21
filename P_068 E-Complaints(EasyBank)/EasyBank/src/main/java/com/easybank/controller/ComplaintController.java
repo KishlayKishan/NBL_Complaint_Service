@@ -34,6 +34,7 @@ public class ComplaintController {
 		complaint.setStep(ComplaintActions.USER_SUBMIT);
 		complaintService.saveComplaint(complaint,userId);
 		request.setAttribute("mode", "MODE_HOME");
+		request.setAttribute("UI_MSG", "Complaint Submitted!");
 		return "homepage";
 	}
 	

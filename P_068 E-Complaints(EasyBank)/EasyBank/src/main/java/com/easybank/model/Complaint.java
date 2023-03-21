@@ -3,6 +3,7 @@ package com.easybank.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +12,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.easybank.enums.ComplaintActions;
 
@@ -30,16 +34,20 @@ public class Complaint implements Serializable {
 	private String lastname;
 	private String emailid;
 	private String accountno;
-	private String date;
+	private LocalDate date=LocalDate.now();
 	private String category;
 	private String subcategory;
 	private String branch;
 	private String details;
 	private String assignto;
-	private LocalDate assigndate;
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date assigndate;
 	private String priority;
 	private String status;
-	private String closeddate;
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date closeddate;
 	private String review;
 	private Integer userId;
 	private Integer isMarkedForSuperAdmin;
@@ -50,9 +58,9 @@ public class Complaint implements Serializable {
 	public Complaint() {
 	}
 
-	public Complaint(String id, String firstname, String lastname, String emailid, String accountno, String date,
-			String category, String subcategory, String branch, String details, String assignto, LocalDate assigndate,
-			String priority, String status, String closeddate, String review, Integer userId,
+	public Complaint(String id, String firstname, String lastname, String emailid, String accountno, LocalDate date,
+			String category, String subcategory, String branch, String details, String assignto, Date assigndate,
+			String priority, String status, Date closeddate, String review, Integer userId,
 			Integer isMarkedForSuperAdmin, ComplaintActions step, LocalDateTime lastUpdateDate) {
 		super();
 	 	this.id = id;
