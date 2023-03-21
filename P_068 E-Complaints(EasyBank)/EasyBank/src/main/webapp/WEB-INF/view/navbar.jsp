@@ -20,14 +20,14 @@
                 <a href="/welcome" class="navbar-brand">Nainital Bank Ltd</a>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        
+
                         <li><a href="/login">User Login</a></li>
                         <li><a href="/register">User Registration</a></li> 
                         <li><a href="/admin">Admin Login</a></li>
                         <li><a href="/adminRegistration">Admin Registration</a></li>
                         <li><a href="/superAdminLogin">Super Admin Login</a></li>
                         <li><a href="/superAdminRegistration">Super Admin Registration</a></li>
-                       
+
                     </ul>
                 </div>
             </div>

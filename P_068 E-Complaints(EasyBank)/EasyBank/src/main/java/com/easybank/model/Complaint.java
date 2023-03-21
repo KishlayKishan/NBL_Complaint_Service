@@ -45,7 +45,6 @@ public class Complaint implements Serializable {
 	private Integer isMarkedForSuperAdmin;
 	@Enumerated(EnumType.STRING)
 	private ComplaintActions step;
-	@Column(columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     private LocalDateTime lastUpdateDate=LocalDateTime.now();
 	
 	public Complaint() {
@@ -56,7 +55,7 @@ public class Complaint implements Serializable {
 			String priority, String status, String closeddate, String review, Integer userId,
 			Integer isMarkedForSuperAdmin, ComplaintActions step, LocalDateTime lastUpdateDate) {
 		super();
-		this.id = id;
+	 	this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.emailid = emailid;
