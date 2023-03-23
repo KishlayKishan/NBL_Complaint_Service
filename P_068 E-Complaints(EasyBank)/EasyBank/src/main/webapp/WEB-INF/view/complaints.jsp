@@ -466,9 +466,16 @@
 					<div class="form-group">
 						<label class="control-label col-md-3">Assign Date</label>
 						<div class="col-md-7">
-							<input type="date" class="form-control" name="assigndate"
+							<c:if test="${sessionScope.user_role != 'SUPER_ADMIN'}">
+								<input type="date" class="form-control" name="assigndate"
 								id="Assign Date" placeholder="__/__/____" required="required"
 								value="${complaint.assigndate}">
+							</c:if>
+							<c:if test="${sessionScope.user_role == 'SUPER_ADMIN'}">
+								<input type="date" class="form-control" name="assigndate"
+								id="Assign Date" placeholder="__/__/____" required="required"
+								value="${complaint.assigndate}" readonly>
+							</c:if>
 						</div>
 					</div>
 					<div class="form-group">
