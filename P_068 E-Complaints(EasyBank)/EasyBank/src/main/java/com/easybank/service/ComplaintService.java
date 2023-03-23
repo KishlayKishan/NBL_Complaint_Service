@@ -54,9 +54,9 @@ public class ComplaintService {
 		});
 	}
 
-	public void saveComplaint(Complaint complaint,Integer userId) {
+	public Complaint saveComplaint(Complaint complaint,Integer userId) {
 		complaint.setUserId(userId);
-		complaintRepo.save(complaint);
+		return complaintRepo.save(complaint);
 	}
 
 	public List<Complaint> showAllComplaints() {

@@ -32,9 +32,9 @@ public class ComplaintController {
 	public String saveComplaint(@ModelAttribute Complaint complaint, BindingResult bindingResult, HttpServletRequest request,HttpSession httpSession ) {
 		Integer userId=(Integer) httpSession.getAttribute("id");
 		complaint.setStep(ComplaintActions.USER_SUBMIT);
-		complaintService.saveComplaint(complaint,userId);
+		Complaint complaintSaved=complaintService.saveComplaint(complaint,userId);
 		request.setAttribute("mode", "MODE_HOME");
-		request.setAttribute("UI_MSG", "Complaint Submitted!");
+		request.setAttribute("UI_MSG", "Complaint Submitted and your complaint Id is : "+complaintSaved.getId());
 		return "homepage";
 	}
 	
