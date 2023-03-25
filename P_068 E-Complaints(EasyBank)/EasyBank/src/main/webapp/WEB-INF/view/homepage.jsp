@@ -81,6 +81,18 @@
 								value="${complaint.emailid }" />
 						</div>
 					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3">Account Type</label>
+						<div class="col-md-7">
+							<select class="form-control" name="accountType"
+								id="accountType" placeholder="Choose Account Type"
+								required="required" value="${complaint.accountType}">
+								<option value="X">X</option>
+								<option value="Y">Y</option>
+								<option value="Z">Z</option>
+							</select>
+						</div>
+					</div>
 
 					<div class="form-group">
 						<label class="control-label col-md-3">Account No</label>
@@ -216,8 +228,7 @@
 						<div class="col-md-7">
 							<textarea input type="text" class="form-control" name="details"
 								id="details" placeholder="Describe Your Complaint in Brief ?"
-								cols="40" rows="4" required="required" value="${complaint.details }">
-							</textarea>
+								cols="40" rows="4" required="required" value="${complaint.details }"></textarea>
 						</div>
 					</div>
 					<div class="form-group ">
@@ -271,7 +282,26 @@
 							</input>
 						</div>
 					</div>
-					
+					<div  class="form-group">
+						<label class="control-label col-md-3">Complain History</label>
+						<ul class="list-group col-md-7 complain-history" style="margin-left: 1em;" aria-label="byrk-arial">
+							<c:forEach var="ch" items="${complaint_history}">  
+							<li class="list-group-item">
+								<div class="history-node">
+									<div class="history-header">
+										<b>${ch.name}</b>
+									</div>
+									<div class="history-body">
+										<h4>${ch.feedback}</h4>
+									</div>
+									<div class="history-footer">
+										<span>LastModified By: <b>${ch.name}</b> | LastModified On: <b>${ch.lastModifiedByDateTime}</b></span>
+									</div>
+								</div>
+							</li>
+							</c:forEach>
+						  </ul>
+					</div>
 				<c:if test="${complaint.step == 'ADMIN_ROLLBACK_TO_USER' }">
 					<form class="form-horizontal" method="POST" action="user-update-complaint">
 						<input type="hidden" name="id" value="${complaint.id}" />
@@ -282,8 +312,7 @@
 									id="details" placeholder="Details..."
 									cols="40" rows="5"
 									required="required">
-									${complaint.details}
-								</textarea>
+									${complaint.details}</textarea>
 							</div>
 						</div>
 						

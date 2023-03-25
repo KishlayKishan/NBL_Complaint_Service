@@ -79,6 +79,7 @@ public class BankController {
 		User userLoginCheck=userService.findByUsernameAndPassword(user.getUsername(), user.getPassword());
 		if(userLoginCheck!=null) {
 			httpSession.setAttribute("user_name", userLoginCheck.getEmailid());
+			httpSession.setAttribute("userDetails", userLoginCheck);
 			httpSession.setAttribute("user_role", "USER");
 			httpSession.setAttribute("id", userLoginCheck.getId());
 			request.setAttribute("mode", "MODE_HOME");

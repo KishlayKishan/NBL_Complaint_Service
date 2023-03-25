@@ -67,10 +67,4 @@ public class SuperAdminController {
 		request.setAttribute("mode", "ALL_COMPLAINTS");
 		return "complaints";
 	}
-//	@RequestMapping("/edit-status-super-admin")
-//	public String editStatus(@RequestParam int id,HttpServletRequest request ) {
-//		request.setAttribute("complaint", adminService.editStatus(id));
-//		request.setAttribute("mode", "MODE_UPDATE");
-//		return "complaints";
-//	}
 }

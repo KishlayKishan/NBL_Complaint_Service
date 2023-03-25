@@ -53,6 +53,7 @@ public class AdminController {
 		if(adminLoginCheck!=null) {
 			httpSession.setAttribute("user_name", adminLoginCheck.getEmailid());
 			httpSession.setAttribute("user_role", "ADMIN");
+			httpSession.setAttribute("userDetails", adminLoginCheck);
 			httpSession.setAttribute("id", adminLoginCheck.getId());
 			request.setAttribute("mode", "MODE_HOME");
 			return "complaints";
@@ -73,6 +74,7 @@ public class AdminController {
 	@RequestMapping("/edit-status")
 	public String editStatus(@RequestParam String id,HttpServletRequest request ,HttpSession httpSession) {
 		request.setAttribute("complaint", adminService.editStatus(id));
+		request.setAttribute("complaint_history", complaintService.getAllComplaintHistoryOfComplaint(id));
 		request.setAttribute("mode", "MODE_UPDATE");
 		request.setAttribute("allAdmins", adminService.getAllAdminExceptMe((int)httpSession.getAttribute("id")));
 		return "complaints";
@@ -94,6 +96,7 @@ public class AdminController {
 		}
 		complaintService.markForSuperAdmin(complaintId,superAdmin.getId());
 		request.setAttribute("complaint", adminService.editStatus(complaintId));
+		request.setAttribute("complaint_history", complaintService.getAllComplaintHistoryOfComplaint(complaintId));
 		request.setAttribute("mode", "MODE_UPDATE");
 		return "complaints";
 	}
@@ -102,6 +105,7 @@ public class AdminController {
 	public String rollbackToUser(@RequestParam String complaintId,HttpServletRequest request ) throws Exception {
 		adminService.rollbackToUser(complaintId);
 		request.setAttribute("complaint", adminService.editStatus(complaintId));
+		request.setAttribute("complaint_history", complaintService.getAllComplaintHistoryOfComplaint(complaintId));
 		request.setAttribute("mode", "MODE_UPDATE");
 		return "complaints";
 	}

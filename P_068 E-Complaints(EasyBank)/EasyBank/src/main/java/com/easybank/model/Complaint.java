@@ -33,7 +33,9 @@ public class Complaint implements Serializable {
 	private String firstname;
 	private String lastname;
 	private String emailid;
+	private String accountType;
 	private String accountno;
+	@Column(name = "COMPLAINT_DATE")
 	private LocalDate date=LocalDate.now();
 	private String category;
 	private String subcategory;
@@ -51,6 +53,7 @@ public class Complaint implements Serializable {
 	private String review;
 	private Integer userId;
 	private Integer isMarkedForSuperAdmin;
+	private String complainFeedback;
 	@Enumerated(EnumType.STRING)
 	private ComplaintActions step;
     private LocalDateTime lastUpdateDate=LocalDateTime.now();
@@ -58,15 +61,16 @@ public class Complaint implements Serializable {
 	public Complaint() {
 	}
 
-	public Complaint(String id, String firstname, String lastname, String emailid, String accountno, LocalDate date,
-			String category, String subcategory, String branch, String details, String assignto, Date assigndate,
-			String priority, String status, Date closeddate, String review, Integer userId,
-			Integer isMarkedForSuperAdmin, ComplaintActions step, LocalDateTime lastUpdateDate) {
+	public Complaint(String id, String firstname, String lastname, String emailid, String accountType, String accountno,
+			LocalDate date, String category, String subcategory, String branch, String details, String assignto,
+			Date assigndate, String priority, String status, Date closeddate, String review, Integer userId,
+			Integer isMarkedForSuperAdmin, String complainFeedback, ComplaintActions step, LocalDateTime lastUpdateDate) {
 		super();
-	 	this.id = id;
+		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.emailid = emailid;
+		this.accountType = accountType;
 		this.accountno = accountno;
 		this.date = date;
 		this.category = category;
@@ -81,10 +85,9 @@ public class Complaint implements Serializable {
 		this.review = review;
 		this.userId = userId;
 		this.isMarkedForSuperAdmin = isMarkedForSuperAdmin;
+		this.complainFeedback = complainFeedback;
 		this.step = step;
 		this.lastUpdateDate = lastUpdateDate;
 	}
-	
-	
 
 }

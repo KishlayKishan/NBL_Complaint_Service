@@ -1,3 +1,23 @@
 .invisible-at-first {
 	display: none;
 }
+.complain-history{
+	margin-left: 1em;
+	max-height: 24em;
+	overflow: auto;
+}
+.history-node{
+	display: flex;
+	flex-direction: column;
+}
+.history-header{
+	display: flex;
+	justify-content: space-between;
+}
+.history-body{
+	text-align: left;
+}
+.history-footer{
+	color:#888888e9;
+	text-align: right;
+}

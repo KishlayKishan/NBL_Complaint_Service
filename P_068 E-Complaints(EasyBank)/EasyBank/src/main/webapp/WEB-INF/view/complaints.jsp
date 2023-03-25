@@ -192,8 +192,8 @@
 		</c:when>
 
 		<c:when test="${mode=='ALL_COMPLAINTS' }">
-			<div class="container text-center" id="tasksDiv">
-				<h3>All Complaints</h3>
+			<div id="tasksDiv" style="margin: 2em;">
+				<h3 style="text-align: center;">All Complaints</h3>
 				<hr>
 				<div class="table-responsive">
 					<table class="table table-striped table-bordered">
@@ -204,6 +204,7 @@
 								<th>Last Name</th>
 								<th>Email ID</th>
 								<th>Date</th>
+								<th>Account Type</th>
 								<th>Account No</th>
 								<th>Category</th>
 								<th>Sub Category</th>
@@ -227,6 +228,7 @@
 									<td>${complaint.lastname}</td>
 									<td>${complaint.emailid}</td>
 									<td>${complaint.date}</td>
+									<td>${complaint.accountType}</td>
 									<td>${complaint.accountno}</td>
 									<td>${complaint.category}</td>
 									<td>${complaint.subcategory}</td>
@@ -253,7 +255,7 @@
 		</c:when>
 		<c:when test="${mode=='MODE_UPDATE'}">
 			<div class="container text-center">
-				<h3>Update Complain</h3>
+				<h3>Update Complain | <b>Complaint ID : ${complaint.id}</b></h3>
 				<hr>
 				<form class="form-horizontal" method="POST" action="update-complaint">
 					<input type="hidden" name="id" value="${complaint.id }"/>
@@ -299,7 +301,18 @@
 								value="${complaint.date}" readonly>
 						</div>
 					</div>
-
+					<div class="form-group">
+						<label class="control-label col-md-3">Account Type</label>
+						<div class="col-md-7">
+							<select input="" type="text" class="form-control" name="accountType"
+								id="accountType" placeholder="Choose Account Type"
+								required="required" value="${complaint.accountType}" readonly>
+								<option value="X" ${complaint.accountType == 'X' ? 'selected=\"selected\"' : ''}>X</option>
+								<option value="Y" ${complaint.accountType == 'Y' ? 'selected=\"selected\"' : ''}>Y</option>
+								<option value="Z" ${complaint.accountType == 'Z' ? 'selected=\"selected\"' : ''}>Z</option>
+							</select>
+						</div>
+					</div>
 					<div class="form-group">
 						<label class="control-label col-md-3">Account No</label>
 						<div class="col-md-7">
@@ -429,22 +442,47 @@
 						<div class="col-md-7">
 							<textarea  type="text" class="form-control" name="details"
 								id="details" placeholder="Describe Your Complaint in Brief..."
-								cols="40" rows="1"
-								required="required" readonly>${complaint.details}
-							</textarea>
+								cols="40" rows="2"
+								required="required" readonly>${complaint.details}</textarea>
 						</div>
 					</div>
-
 					<div class="form-group">
-						<label class="control-label col-md-3">Assign
-							To</label>
+						<label class="control-label col-md-3">Complain Review</label>
+						<div class="col-md-7">
+							<textarea  type="text" class="form-control" name="complainFeedback"
+								id="details" placeholder="Please provide your feedback"
+								cols="40" rows="3">${complaint.complainFeedback}</textarea>
+						</div>
+					</div>
+					<div  class="form-group">
+						<label class="control-label col-md-3">Complain History</label>
+						<ul class="list-group col-md-7 complain-history" style="margin-left: 1em;" aria-label="byrk-arial">
+							<c:forEach var="ch" items="${complaint_history}">  
+							<li class="list-group-item">
+								<div class="history-node">
+									<div class="history-header">
+										<b>${ch.name}</b>
+									</div>
+									<div class="history-body">
+										<h4>${ch.feedback}</h4>
+									</div>
+									<div class="history-footer">
+										<span>LastModified By: <b>${ch.name}</b> | LastModified On: <b>${ch.lastModifiedByDateTime}</b></span>
+									</div>
+								</div>
+							</li>
+							</c:forEach>
+						  </ul>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3">Assign To</label>
 						<div class="col-md-7">
 							<select input type="text" class="form-control" name="assignto"
 							id="assignto" placeholder="Complaint is Assign to ?"
 							required="required" value="${complaint.assignto}">
+							<option>--</option>
 							<c:forEach items="${allAdmins}" var="admin">
-								<option>--</option>
-								<option value="${admin.id}">${admin.id} - ${admin.firstname} ${admin.lastname}</option>
+								<option value="${admin.id}" ${admin.id == complaint.assignto ? 'selected=\"selected\"' : ''}>${admin.id} - ${admin.firstname} ${admin.lastname}</option>
 							  </c:forEach>
 						</select>
 						</div>
@@ -508,19 +546,6 @@
 
 
 					</div>
-					<c:if test="${sessionScope.user_role == 'SUPER_ADMIN'}">	
-					<div class="form-group">
-						<label class="control-label col-md-3">Review</label>
-						<div class="col-md-7">
-							<textarea  type="text" class="form-control" name="Review"
-								id="Review" placeholder="Write Review For This Complaint..."
-								cols="40" rows="5"
-								required="required">
-								${complaint.review}
-							</textarea>
-						</div>
-					</div>
-					</c:if>
 					<div class="form-group ">
 						<c:if test="${sessionScope.user_role != 'SUPER_ADMIN'}">
 							<input type="submit" formaction="/rollback-to-user?complaintId=${complaint.id}" formnovalidate class="btn btn-primary" value="Rollback to User" />

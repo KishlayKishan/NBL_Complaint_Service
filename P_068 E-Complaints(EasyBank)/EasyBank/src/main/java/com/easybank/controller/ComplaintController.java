@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.easybank.enums.ComplaintActions;
+import com.easybank.model.Admin;
 import com.easybank.model.Complaint;
+import com.easybank.model.User;
 import com.easybank.service.ComplaintService;
 
 @Controller
@@ -39,8 +41,9 @@ public class ComplaintController {
 	}
 	
 	@PostMapping("/update-complaint")
-	public String updateComplaint(@ModelAttribute Complaint complaint, BindingResult bindingResult, HttpServletRequest request) {
-		complaintService.updateComplaint(complaint);
+	public String updateComplaint(@ModelAttribute Complaint complaint, BindingResult bindingResult, HttpServletRequest request,HttpSession session) {
+		Admin currentAdmin = (Admin) session.getAttribute("userDetails");
+		complaintService.updateComplaint(complaint,currentAdmin,(String)session.getAttribute("user_role"));
 		complaint.setStep(ComplaintActions.USER_UPDATED);
 		request.setAttribute("complaints", adminService.showAllComplaints());
 		request.setAttribute("mode", "ALL_COMPLAINTS");
@@ -63,13 +66,15 @@ public class ComplaintController {
 	@RequestMapping("/getStatus")
 	public String checkStatus( HttpServletRequest request,@RequestParam("id") String cid) {
 		request.setAttribute("complaints", complaintService.getComplaintById(cid));
+		request.setAttribute("complaint_history", complaintService.getAllComplaintHistoryOfComplaint(cid));
 		request.setAttribute("mode", "MODE_SHOW_USER_COMPLAINT");
 		return "homepage";
 	}
 
 	@PostMapping("/user-update-complaint")
-	public String userUpdateComplaint(@ModelAttribute Complaint complaint, BindingResult bindingResult, HttpServletRequest request) {
-		complaintService.userUpdateComplaint(complaint);
+	public String userUpdateComplaint(@ModelAttribute Complaint complaint, BindingResult bindingResult, HttpServletRequest request,HttpSession session) {
+		User currentUser = (User) session.getAttribute("userDetails");
+		complaintService.userUpdateComplaint(complaint,currentUser,(String)session.getAttribute("user_role"));
 		request.setAttribute("complaints", complaintService.getComplaintById(complaint.getId()));
 		request.setAttribute("mode", "MODE_SHOW_USER_COMPLAINT");
 		return "homepage";

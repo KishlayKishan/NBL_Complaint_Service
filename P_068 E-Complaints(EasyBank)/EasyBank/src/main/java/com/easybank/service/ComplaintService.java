@@ -8,23 +8,31 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.easybank.dao.ComplaintHistoryRepository;
 import com.easybank.dao.ComplaintRepository;
 import com.easybank.enums.ComplaintActions;
+import com.easybank.model.Admin;
 import com.easybank.model.Complaint;
+import com.easybank.model.ComplaintHistory;
+import com.easybank.model.User;
 
 @Service
 @Transactional
 public class ComplaintService {
 
 	private final ComplaintRepository complaintRepo;
+	
+	@Autowired
+	private ComplaintHistoryRepository complaintHistoryRepo;
 
 	public ComplaintService(ComplaintRepository complaintRepo) {
 		this.complaintRepo = complaintRepo;
 	}
 
-	public void updateComplaint(Complaint complaint) {
+	public void updateComplaint(Complaint complaint,Admin admin,String role) {
 		Optional<Complaint> complaintCheck = complaintRepo.findById(complaint.getId());
 		complaintCheck.ifPresent((Complaint c) -> {
 			c.setAssigndate(complaint.getAssigndate());
@@ -41,6 +49,15 @@ public class ComplaintService {
 			c.setCloseddate(complaint.getCloseddate());
 			c.setReview(complaint.getReview());
 			c.setLastUpdateDate(LocalDateTime.now());
+			
+			ComplaintHistory complaintHistory=new ComplaintHistory();
+			complaintHistory.setComplaintId(complaint.getId());
+			complaintHistory.setFeedback(complaint.getComplainFeedback());
+			complaintHistory.setName(admin.getFirstname()+" "+admin.getLastname());
+			complaintHistory.setModifiedByRole(role);
+			complaintHistory.setModifiedEntityId(admin.getId());
+			complaintHistoryRepo.save(complaintHistory);
+			
 			complaintRepo.save(c);
 		});
 	}
@@ -84,12 +101,21 @@ public class ComplaintService {
 		return complaintRepo.findById(cid).get();
 	}
 	
-	public void userUpdateComplaint(Complaint complaint) {
+	public void userUpdateComplaint(Complaint complaint,User user,String role) {
 		Optional<Complaint> complaintCheck = complaintRepo.findById(complaint.getId());
 		complaintCheck.ifPresent((Complaint c) -> {
 			c.setDetails(complaint.getDetails());
 			c.setStep(ComplaintActions.USER_UPDATED);
 			c.setLastUpdateDate(LocalDateTime.now());
+			
+			ComplaintHistory complaintHistory=new ComplaintHistory();
+			complaintHistory.setComplaintId(complaint.getId());
+			complaintHistory.setFeedback(complaint.getComplainFeedback());
+			complaintHistory.setName(user.getFirstname()+" "+user.getLastname());
+			complaintHistory.setModifiedByRole(role);
+			complaintHistory.setModifiedEntityId(user.getId());
+			complaintHistoryRepo.save(complaintHistory);
+			
 			complaintRepo.save(c);
 		});
 	}
@@ -101,5 +127,9 @@ public class ComplaintService {
 			c.setLastUpdateDate(LocalDateTime.now());
 			complaintRepo.save(c);
 		});
+	}
+	
+	public List<ComplaintHistory> getAllComplaintHistoryOfComplaint(String complaintId) {
+		return complaintHistoryRepo.findAllByComplaintId(complaintId);
 	}
 }
