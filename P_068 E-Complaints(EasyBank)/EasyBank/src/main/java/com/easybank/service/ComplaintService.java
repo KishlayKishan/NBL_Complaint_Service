@@ -8,16 +8,13 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import com.easybank.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.easybank.dao.ComplaintHistoryRepository;
 import com.easybank.dao.ComplaintRepository;
 import com.easybank.enums.ComplaintActions;
-import com.easybank.model.Admin;
-import com.easybank.model.Complaint;
-import com.easybank.model.ComplaintHistory;
-import com.easybank.model.User;
 
 @Service
 @Transactional
@@ -58,6 +55,36 @@ public class ComplaintService {
 			complaintHistory.setModifiedEntityId(admin.getId());
 			complaintHistoryRepo.save(complaintHistory);
 			
+			complaintRepo.save(c);
+		});
+	}
+
+	public void updateComplaintSuperAdmin(Complaint complaint, SuperAdmin admin, String role) {
+		Optional<Complaint> complaintCheck = complaintRepo.findById(complaint.getId());
+		complaintCheck.ifPresent((Complaint c) -> {
+			c.setAssigndate(complaint.getAssigndate());
+			c.setBranch(complaint.getBranch());
+			c.setCategory(complaint.getCategory());
+			c.setDetails(complaint.getDetails());
+			c.setEmailid(complaint.getEmailid());
+//			c.setFirstname(complaint.getF);
+//			c.setLastname(null);
+			c.setSubcategory(complaint.getSubcategory());
+			c.setStatus(complaint.getStatus());
+			c.setPriority(complaint.getPriority());
+			c.setAssignto(complaint.getAssignto());
+			c.setCloseddate(complaint.getCloseddate());
+			c.setReview(complaint.getReview());
+			c.setLastUpdateDate(LocalDateTime.now());
+
+			ComplaintHistory complaintHistory=new ComplaintHistory();
+			complaintHistory.setComplaintId(complaint.getId());
+			complaintHistory.setFeedback(complaint.getComplainFeedback());
+			complaintHistory.setName(admin.getFirstname()+" "+admin.getLastname());
+			complaintHistory.setModifiedByRole(role);
+			complaintHistory.setModifiedEntityId(admin.getId());
+			complaintHistoryRepo.save(complaintHistory);
+
 			complaintRepo.save(c);
 		});
 	}

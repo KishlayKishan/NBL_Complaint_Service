@@ -3,6 +3,7 @@ package com.easybank.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.easybank.model.SuperAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -42,8 +43,14 @@ public class ComplaintController {
 	
 	@PostMapping("/update-complaint")
 	public String updateComplaint(@ModelAttribute Complaint complaint, BindingResult bindingResult, HttpServletRequest request,HttpSession session) {
-		Admin currentAdmin = (Admin) session.getAttribute("userDetails");
-		complaintService.updateComplaint(complaint,currentAdmin,(String)session.getAttribute("user_role"));
+		String role=(String)session.getAttribute("user_role");
+		if("SUPER_ADMIN".equalsIgnoreCase(role)) {
+			SuperAdmin currentAdmin = (SuperAdmin) session.getAttribute("userDetails");
+			complaintService.updateComplaintSuperAdmin(complaint, currentAdmin, role);
+		}else{
+			Admin currentAdmin = (Admin) session.getAttribute("userDetails");
+			complaintService.updateComplaint(complaint, currentAdmin,role);
+		}
 		complaint.setStep(ComplaintActions.USER_UPDATED);
 		request.setAttribute("complaints", adminService.showAllComplaints());
 		request.setAttribute("mode", "ALL_COMPLAINTS");

@@ -307,9 +307,13 @@
 							<select input="" type="text" class="form-control" name="accountType"
 								id="accountType" placeholder="Choose Account Type"
 								required="required" value="${complaint.accountType}" readonly>
-								<option value="X" ${complaint.accountType == 'X' ? 'selected=\"selected\"' : ''}>X</option>
-								<option value="Y" ${complaint.accountType == 'Y' ? 'selected=\"selected\"' : ''}>Y</option>
-								<option value="Z" ${complaint.accountType == 'Z' ? 'selected=\"selected\"' : ''}>Z</option>
+								<option value="Savings Account" ${complaint.accountType == 'Savings Account' ? 'selected=\"selected\"' : ''}>Savings Account</option>
+								<option value="Current Account" ${complaint.accountType == 'Current Account' ? 'selected=\"selected\"' : ''}>Current Account</option>
+								<option value="Fixed Deposit Account(FD)" ${complaint.accountType == 'Fixed Deposit Account(FD)' ? 'selected=\"selected\"' : ''}>Fixed Deposit Account(FD)</option>
+								<option value="Recurring Deposit Account(RD)" ${complaint.accountType == 'Recurring Deposit Account(RD)' ? 'selected=\"selected\"' : ''}>Recurring Deposit Account(RD)</option>
+								<option value="Loan Account" ${complaint.accountType == 'Loan Account' ? 'selected=\"selected\"' : ''}>Loan Account</option>
+                                <option value="Cash Credit Account(CC)" ${complaint.accountType == 'Cash Credit Account(CC)' ? 'selected=\"selected\"' : ''}>Cash Credit Account(CC)</option>
+                                <option value="Over Draft Account(OD)" ${complaint.accountType == 'Over Draft Account(OD)' ? 'selected=\"selected\"' : ''}>Over Draft Account(OD)</option>
 							</select>
 						</div>
 					</div>
@@ -528,7 +532,7 @@
                               <label class="control-label col-md-3">Closed Date</label>
                                <div class="col-md-7">
                                <input type="date" class="form-control" name="closeddate"
-                                     id="Closed Date" placeholder="__/__/____" required="required"
+                                     id="Closed Date" placeholder="__/__/____"
                                       value="${complaint.closeddate}">
                                  </div>
                                </div>

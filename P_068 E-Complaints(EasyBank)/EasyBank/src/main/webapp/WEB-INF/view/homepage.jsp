@@ -87,9 +87,13 @@
 							<select class="form-control" name="accountType"
 								id="accountType" placeholder="Choose Account Type"
 								required="required" value="${complaint.accountType}">
-								<option value="X">X</option>
-								<option value="Y">Y</option>
-								<option value="Z">Z</option>
+								<option value="Savings Account" ${complaint.accountType == 'Savings Account' ? 'selected=\"selected\"' : ''}>Savings Account</option>
+                                								<option value="Current Account" ${complaint.accountType == 'Current Account' ? 'selected=\"selected\"' : ''}>Current Account</option>
+                                								<option value="Fixed Deposit Account(FD)" ${complaint.accountType == 'Fixed Deposit Account(FD)' ? 'selected=\"selected\"' : ''}>Fixed Deposit Account(FD)</option>
+                                								<option value="Recurring Deposit Account(RD)" ${complaint.accountType == 'Recurring Deposit Account(RD)' ? 'selected=\"selected\"' : ''}>Recurring Deposit Account(RD)</option>
+                                								<option value="Loan Account" ${complaint.accountType == 'Loan Account' ? 'selected=\"selected\"' : ''}>Loan Account</option>
+                                                                <option value="Cash Credit Account(CC)" ${complaint.accountType == 'Cash Credit Account(CC)' ? 'selected=\"selected\"' : ''}>Cash Credit Account(CC)</option>
+                                                                <option value="Over Draft Account(OD)" ${complaint.accountType == 'Over Draft Account(OD)' ? 'selected=\"selected\"' : ''}>Over Draft Account(OD)</option>
 							</select>
 						</div>
 					</div>
@@ -98,8 +102,8 @@
 						<label class="control-label col-md-3">Account No</label>
 						<div class="col-md-7">
 							<input type="text" class="form-control" name="accountno"
-								id="accountno" placeholder="Enter account no" maxlength="12"
-								pattern="[0-9]{12}" required="required"
+								id="accountno" placeholder="Enter account no" maxlength="16"
+								 required="required"
 								value="${complaint.accountno }" />
 						</div>
 					</div>

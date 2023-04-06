@@ -50,6 +50,7 @@ public class SuperAdminController {
 			httpSession.setAttribute("user_name", adminLoginCheck.getEmailid());
 			httpSession.setAttribute("id", adminLoginCheck.getId());
 			httpSession.setAttribute("user_role", "SUPER_ADMIN");
+			httpSession.setAttribute("userDetails", adminLoginCheck);
 			request.setAttribute("mode", "MODE_HOME");
 			return "complaints";
 		}
