@@ -446,7 +446,7 @@
 						<div class="col-md-7">
 							<textarea  type="text" class="form-control" name="details"
 								id="details" placeholder="Describe Your Complaint in Brief..."
-								cols="40" rows="2"
+								cols="100" rows="5"
 								required="required" readonly>${complaint.details}</textarea>
 						</div>
 					</div>
@@ -455,7 +455,7 @@
 						<div class="col-md-7">
 							<textarea  type="text" class="form-control" name="complainFeedback"
 								id="details" placeholder="Please provide your feedback"
-								cols="40" rows="3">${complaint.complainFeedback}</textarea>
+								cols="100" rows="5">${complaint.complainFeedback}</textarea>
 						</div>
 					</div>
 					<div  class="form-group">
