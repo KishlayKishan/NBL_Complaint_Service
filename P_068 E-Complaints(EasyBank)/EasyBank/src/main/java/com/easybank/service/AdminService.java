@@ -2,10 +2,7 @@ package com.easybank.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -78,7 +75,9 @@ public class AdminService {
 	}
 	
 	public List<Complaint> getAllComplaintsNotAssignedToAnyOne(){
-		return complaintRepo.findAllByAssigntoIsNull();
+		String status="Open";
+
+		return complaintRepo.findByAssigntoNullOrAssigntoNotNullAndStatusAndAssigntoNotIn(status);
 	}
 	
 	public void assignToRandomAdmins(Complaint complaint,Admin admin) {

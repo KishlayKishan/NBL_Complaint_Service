@@ -19,6 +19,7 @@ public class Admin {
 	private String username;
 	private String firstname;
 	private String lastname;
+	private String level;
 	private String branchname;
 	private String location;
 	private String mobileno;
@@ -31,12 +32,13 @@ public class Admin {
 		super();
 	}
 
-	public Admin(String username, String firstname, String lastname, String branchname, String location,
+	public Admin(String username, String firstname, String lastname, String level, String branchname, String location,
 			String mobileno, String emailid, String password) {
 		super();
 		this.username = username;
 		this.firstname = firstname;
 		this.lastname = lastname;
+		this.level = level;
 		this.branchname = branchname;
 		this.location = location;
 		this.mobileno = mobileno;

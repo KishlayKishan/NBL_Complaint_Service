@@ -84,7 +84,21 @@
 						</div>
 					</div>
 
-                      
+                    <div class="form-group">
+                    						<label class="control-label col-md-3">level</label>
+                    						<div class="col-md-7">
+                    							<select input type="text" class="form-control" name="Level"
+                    								id="Level" placeholder="Select the level"
+                    								required="required"
+                    								value="${admin.level}">
+                    								<option value="Branch">Branch Level</option>
+                    								<option value="Regional Office">Regional Office</option>
+                    								<option value="Zonal Office">Zonal Office</option>
+                    								<option value="Head Office">Head Office</option>
+                    							</select>
+                    						</div>
+                    					</div>
+
 
 					    <div class="form-group">
 
