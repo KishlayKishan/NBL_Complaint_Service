@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import com.easybank.model.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,16 +19,14 @@ import com.easybank.enums.ComplaintActions;
 
 @Service
 @Transactional
+@Slf4j
 public class ComplaintService {
+	@Autowired
+	private ComplaintRepository complaintRepo;
 
-	private final ComplaintRepository complaintRepo;
-	
 	@Autowired
 	private ComplaintHistoryRepository complaintHistoryRepo;
 
-	public ComplaintService(ComplaintRepository complaintRepo) {
-		this.complaintRepo = complaintRepo;
-	}
 
 	public void updateComplaint(Complaint complaint,Admin admin,String role) {
 		Optional<Complaint> complaintCheck = complaintRepo.findById(complaint.getId());
@@ -46,7 +45,7 @@ public class ComplaintService {
 			c.setCloseddate(complaint.getCloseddate());
 			c.setReview(complaint.getReview());
 			c.setLastUpdateDate(LocalDateTime.now());
-			
+
 			ComplaintHistory complaintHistory=new ComplaintHistory();
 			complaintHistory.setComplaintId(complaint.getId());
 			complaintHistory.setFeedback(complaint.getComplainFeedback());
@@ -54,7 +53,7 @@ public class ComplaintService {
 			complaintHistory.setModifiedByRole(role);
 			complaintHistory.setModifiedEntityId(admin.getId());
 			complaintHistoryRepo.save(complaintHistory);
-			
+
 			complaintRepo.save(c);
 		});
 	}
@@ -125,16 +124,17 @@ public class ComplaintService {
 	}
 
 	public Complaint getComplaintById(String cid) {
+		log.info("complaint cid: {}",cid);
 		return complaintRepo.findById(cid).get();
 	}
-	
+
 	public void userUpdateComplaint(Complaint complaint,User user,String role) {
 		Optional<Complaint> complaintCheck = complaintRepo.findById(complaint.getId());
 		complaintCheck.ifPresent((Complaint c) -> {
 			c.setDetails(complaint.getDetails());
 			c.setStep(ComplaintActions.USER_UPDATED);
 			c.setLastUpdateDate(LocalDateTime.now());
-			
+
 			ComplaintHistory complaintHistory=new ComplaintHistory();
 			complaintHistory.setComplaintId(complaint.getId());
 			complaintHistory.setFeedback(complaint.getComplainFeedback());
@@ -142,20 +142,25 @@ public class ComplaintService {
 			complaintHistory.setModifiedByRole(role);
 			complaintHistory.setModifiedEntityId(user.getId());
 			complaintHistoryRepo.save(complaintHistory);
-			
+
 			complaintRepo.save(c);
 		});
 	}
-	
-	public void requestToClose(String id) {
+
+	public Complaint requestToClose(String id) {
 		Optional<Complaint> complaintCheck = complaintRepo.findById(id);
-		complaintCheck.ifPresent((Complaint c) -> {
-			c.setStep(ComplaintActions.USER_REQUEST_TO_CLOSE);
-			c.setLastUpdateDate(LocalDateTime.now());
-			complaintRepo.save(c);
-		});
+		if(complaintCheck.isPresent()){
+			Complaint c=complaintCheck.get();
+			log.info("complaint is:{}",c);
+				c.setStep(ComplaintActions.USER_REQUEST_TO_CLOSE);
+				c.setLastUpdateDate(LocalDateTime.now());
+				return complaintRepo.save(c);
+		}
+		else{
+			return new Complaint();
+		}
 	}
-	
+
 	public List<ComplaintHistory> getAllComplaintHistoryOfComplaint(String complaintId) {
 		return complaintHistoryRepo.findAllByComplaintId(complaintId);
 	}

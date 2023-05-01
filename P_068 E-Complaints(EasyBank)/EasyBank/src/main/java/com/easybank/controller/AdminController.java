@@ -76,7 +76,7 @@ public class AdminController {
 		request.setAttribute("complaint", adminService.editStatus(id));
 		request.setAttribute("complaint_history", complaintService.getAllComplaintHistoryOfComplaint(id));
 		request.setAttribute("mode", "MODE_UPDATE");
-		request.setAttribute("allAdmins", adminService.getAllAdminExceptMe((int)httpSession.getAttribute("id")));
+		request.setAttribute("allAdmins", adminService.getAllAdminExceptMe(-1));
 		return "complaints";
 	}
 	

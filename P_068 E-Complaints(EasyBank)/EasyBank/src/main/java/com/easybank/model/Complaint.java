@@ -5,15 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -40,6 +32,7 @@ public class Complaint implements Serializable {
 	private String category;
 	private String subcategory;
 	private String branch;
+	@Lob
 	private String details;
 	private String assignto;
 	@Temporal(TemporalType.DATE)
@@ -53,6 +46,7 @@ public class Complaint implements Serializable {
 	private String review;
 	private Integer userId;
 	private Integer isMarkedForSuperAdmin;
+	@Lob
 	private String complainFeedback;
 	@Enumerated(EnumType.STRING)
 	private ComplaintActions step;

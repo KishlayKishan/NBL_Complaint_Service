@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.easybank.model.SuperAdmin;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,7 @@ import com.easybank.model.User;
 import com.easybank.service.ComplaintService;
 
 @Controller
+@Slf4j
 public class ComplaintController {
 	@Autowired
 	ComplaintService complaintService;
@@ -87,9 +89,10 @@ public class ComplaintController {
 		return "homepage";
 	}
 	@PostMapping("/request-to-close")
-	public String requestToCloseComplaint(@RequestParam("id") String id, HttpServletRequest request) {
-		complaintService.requestToClose(id);
-		request.setAttribute("complaints", complaintService.getComplaintById(id));
+	public String requestToCloseComplaint(@RequestParam("compid") String compid, HttpServletRequest request) {
+		log.info("complaint id: {}",compid);
+		Complaint c=complaintService.requestToClose(compid);
+		request.setAttribute("complaints", c);
 		request.setAttribute("mode", "MODE_SHOW_USER_COMPLAINT");
 		return "homepage";
 	}

@@ -501,7 +501,7 @@
 						
 						<div class="form-group ">
 							<input type="submit" class="btn btn-primary" formmethod="POST" formaction="/user-update-complaint" value="Submit" />
-							<input type="submit" formnovalidate class="btn btn-primary" formmethod="POST" formaction="/request-to-close?id=${complaint.id}" value="Request to close" />
+							<input type="submit" formnovalidate class="btn btn-primary" formmethod="POST" formaction="/request-to-close?compid=${complaint.id}" value="Request to close" />
 						</div>	
 					</form>
 				</c:if>
