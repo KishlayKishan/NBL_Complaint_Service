@@ -20,6 +20,7 @@ public class AutoAssignScheduler {
 	@Autowired
 	AdminService adminService;
 
+
 	@Scheduled(cron = "* * * * * *")     //"0 0 0 * * *" for 12 non  //"* * * * * *" = For every second //0 * * * * * = for every minute
     public void runAutoAssignToRandomAdmins() {
 

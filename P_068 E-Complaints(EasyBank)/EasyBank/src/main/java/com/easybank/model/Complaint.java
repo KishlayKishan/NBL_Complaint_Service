@@ -20,7 +20,7 @@ import lombok.Data;
 public class Complaint implements Serializable {
 	@Id
 	@GeneratedValue(generator = "myStringSequenceGenerator")
-    @GenericGenerator(name = "myStringSequenceGenerator", strategy = "com.easybank.model.CustomStringSequenceGenerator")
+	@GenericGenerator(name = "myStringSequenceGenerator", strategy = "com.easybank.model.CustomStringSequenceGenerator")
 	private String id;
 	private String firstname;
 	private String lastname;
@@ -32,6 +32,7 @@ public class Complaint implements Serializable {
 	private String category;
 	private String subcategory;
 	private String branch;
+	private String region;
 	@Lob
 	private String details;
 	private String assignto;
@@ -45,20 +46,21 @@ public class Complaint implements Serializable {
 	private Date closeddate;
 	private String review;
 	private Integer userId;
+	private Integer isMarkedForAdmin;
 	private Integer isMarkedForSuperAdmin;
 	@Lob
 	private String complainFeedback;
 	@Enumerated(EnumType.STRING)
 	private ComplaintActions step;
-    private LocalDateTime lastUpdateDate=LocalDateTime.now();
-	
+	private LocalDateTime lastUpdateDate=LocalDateTime.now();
+
 	public Complaint() {
 	}
 
 	public Complaint(String id, String firstname, String lastname, String emailid, String accountType, String accountno,
-			LocalDate date, String category, String subcategory, String branch, String details, String assignto,
-			Date assigndate, String priority, String status, Date closeddate, String review, Integer userId,
-			Integer isMarkedForSuperAdmin, String complainFeedback, ComplaintActions step, LocalDateTime lastUpdateDate) {
+					 LocalDate date, String category, String subcategory, String branch, String region, String details, String assignto,
+					 Date assigndate, String priority, String status, Date closeddate, String review, Integer userId, Integer isMarkedForAdmin,
+					 Integer isMarkedForSuperAdmin, String complainFeedback, ComplaintActions step, LocalDateTime lastUpdateDate) {
 		super();
 		this.id = id;
 		this.firstname = firstname;
@@ -70,6 +72,7 @@ public class Complaint implements Serializable {
 		this.category = category;
 		this.subcategory = subcategory;
 		this.branch = branch;
+		this.branch = region;
 		this.details = details;
 		this.assignto = assignto;
 		this.assigndate = assigndate;
@@ -78,6 +81,7 @@ public class Complaint implements Serializable {
 		this.closeddate = closeddate;
 		this.review = review;
 		this.userId = userId;
+		this.isMarkedForAdmin = isMarkedForAdmin;
 		this.isMarkedForSuperAdmin = isMarkedForSuperAdmin;
 		this.complainFeedback = complainFeedback;
 		this.step = step;

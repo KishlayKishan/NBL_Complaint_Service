@@ -7,7 +7,7 @@ import org.hibernate.id.IdentifierGenerator;
 public class CustomStringSequenceGenerator implements IdentifierGenerator {
 
     private static final String PREFIX = "NBL";
-    private static final int INITIAL_VALUE = 1;
+    private static final int INITIAL_VALUE = 001;
     private int sequenceValue = INITIAL_VALUE;
 
     @Override

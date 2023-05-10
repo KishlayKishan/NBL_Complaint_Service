@@ -36,6 +36,8 @@ public class AdminService {
 		return adminRepo.findByUsernameAndPassword(username, password);
 	}
 
+
+
 	public List<Complaint> showAllComplaints() {
 		List<Complaint> complaints = new ArrayList<Complaint>();
 		complaints = complaintRepo.findAll();
@@ -46,7 +48,7 @@ public class AdminService {
 	public Complaint editStatus(String id) {
 		return complaintRepo.findById(id).orElse(new Complaint());
 	}
-	
+
 	public List<Admin> getAllAdminExceptMe(int id) {
 		if(id==-1) {
 			return adminRepo.findAll();
@@ -73,17 +75,17 @@ public class AdminService {
 		});
 
 	}
-	
+
 	public List<Complaint> getAllComplaintsNotAssignedToAnyOne(){
 		String status="Open";
 
 		return complaintRepo.findByAssigntoNullOrAssigntoNotNullAndStatusAndAssigntoNotIn(status);
 	}
-	
-	public void assignToRandomAdmins(Complaint complaint,Admin admin) {
+
+	public void assignToRandomBranches(Complaint complaint,Branch branch) {
 		Optional<Complaint> complaintCheck = complaintRepo.findById(complaint.getId());
 		complaintCheck.ifPresent((Complaint c) -> {
-			c.setAssignto(""+admin.getId());
+			c.setAssignto(""+branch.getId());
 			c.setAssigndate(new Date());
 			complaintRepo.save(c);
 		});
