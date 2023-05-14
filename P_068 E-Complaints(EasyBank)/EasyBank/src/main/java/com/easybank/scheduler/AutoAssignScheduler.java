@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 
+import com.easybank.model.Branch;
+import com.easybank.service.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,9 @@ public class AutoAssignScheduler {
 	@Autowired
 	AdminService adminService;
 
+	@Autowired
+	BranchService branchService;
+
 
 	@Scheduled(cron = "* * * * * *")     //"0 0 0 * * *" for 12 non  //"* * * * * *" = For every second //0 * * * * * = for every minute
     public void runAutoAssignToRandomAdmins() {
@@ -29,17 +34,17 @@ public class AutoAssignScheduler {
 
         
         List<Complaint> complaints=adminService.getAllComplaintsNotAssignedToAnyOne();
-		List<Admin> allAdmins=null;
+		List<Branch> allAdmins=null;
         for(Complaint complaint:complaints) {
 			if(checkSevenDaysPassedAndNotAssigned(complaint)) {
-				allAdmins=adminService.getAllAdminExceptMe(Integer.parseInt(complaint.getAssignto()));
-				Admin admin = allAdmins.get(getRandomNumberBetweenRange(allAdmins.size()));
-				adminService.assignToRandomAdmins(complaint, admin);
+				allAdmins=branchService.getAllBranchExceptMe(Integer.parseInt(complaint.getAssignto()));
+				Branch admin = allAdmins.get(getRandomNumberBetweenRange(allAdmins.size()));
+				adminService.assignToRandomBranches(complaint, admin);
 			}else{
 				if(complaint.getAssignto()==null) {
-					allAdmins = adminService.getAllAdminExceptMe(-1);
-					Admin admin = allAdmins.get(getRandomNumberBetweenRange(allAdmins.size()));
-					adminService.assignToRandomAdmins(complaint, admin);
+					allAdmins = branchService.getAllBranchExceptMe(-1);
+					Branch admin = allAdmins.get(getRandomNumberBetweenRange(allAdmins.size()));
+					adminService.assignToRandomBranches(complaint, admin);
 				}
 			}
         }
