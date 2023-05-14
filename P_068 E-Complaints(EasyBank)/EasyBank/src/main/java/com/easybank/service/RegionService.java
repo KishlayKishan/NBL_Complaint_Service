@@ -123,6 +123,10 @@ public class RegionService {
         return complaintRepo.findByAssigntoNullOrAssigntoNotNullAndStatusAndAssigntoNotIn(status);
     }
 
+    public Region getRegionById(Integer id){
+        return regionRepo.findById(id).get();
+    }
+
 
 }
 

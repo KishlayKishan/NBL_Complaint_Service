@@ -94,14 +94,14 @@ public class BranchController {
 
     @RequestMapping("/get-all-Region")
     public String getAllRegion(@RequestParam String id,HttpServletRequest request ) {
-        request.setAttribute("Region", regionService.getRegion());
+        request.setAttribute("Region", regionService.getAllRegionExceptMe(-1));
         request.setAttribute("mode", "MODE_FORWARD_TO_REGION");
         request.setAttribute("complainId", id);
         return "complaints";
     }
 
     @RequestMapping("/forward-to-Region")
-    public String forwardToRegion(@RequestParam String complaintId,@RequestParam int RegionId,HttpServletRequest request ) throws Exception {
+    public String forwardToRegion(@RequestParam String complaintId,@RequestParam int regionId,HttpServletRequest request ) throws Exception {
         Region region=regionService.getRegionById(regionId);
         if(region==null) {
             throw new Exception("NO REGION FOUND!");
@@ -123,9 +123,10 @@ public class BranchController {
     }
 
     @RequestMapping("/delete-complaint")
-    public String deleteComplaint(@RequestParam String id, HttpServletRequest request ) {
+    public String deleteComplaint(@RequestParam String id, HttpServletRequest request,HttpSession session ) {
+        Branch currentUser = (Branch) session.getAttribute("userDetails");
         branchService.deleteComplaint(id);
-        request.setAttribute("complaint", branchService.showAllComplaints());
+        request.setAttribute("complaint", complaintService.findByAssignedTo(currentUser.getId()+""));
         request.setAttribute("mode", "All_COMPLAINTS");
         return "complaints";
 
