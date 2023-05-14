@@ -25,6 +25,7 @@ public class Region {
 	@Column(unique = true)
 	private String emailid;
 	private String password;
+	private String level;
 	
 	
 	public Region() {

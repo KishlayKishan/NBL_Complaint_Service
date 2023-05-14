@@ -49,9 +49,9 @@ public class ComplaintService {
 			ComplaintHistory complaintHistory=new ComplaintHistory();
 			complaintHistory.setComplaintId(complaint.getId());
 			complaintHistory.setFeedback(complaint.getComplainFeedback());
-			complaintHistory.setName(admin.getFirstname()+" "+admin.getLastname());
+			complaintHistory.setName(branch.getFirstname()+" "+branch.getLastname());
 			complaintHistory.setModifiedByRole(role);
-			complaintHistory.setModifiedEntityId(admin.getId());
+			complaintHistory.setModifiedEntityId(branch.getId());
 			complaintHistoryRepo.save(complaintHistory);
 
 			complaintRepo.save(c);
@@ -80,9 +80,9 @@ public class ComplaintService {
 			ComplaintHistory complaintHistory=new ComplaintHistory();
 			complaintHistory.setComplaintId(complaint.getId());
 			complaintHistory.setFeedback(complaint.getComplainFeedback());
-			complaintHistory.setName(admin.getFirstname()+" "+admin.getLastname());
+			complaintHistory.setName(region.getFirstname()+" "+region.getLastname());
 			complaintHistory.setModifiedByRole(role);
-			complaintHistory.setModifiedEntityId(admin.getId());
+			complaintHistory.setModifiedEntityId(region.getId());
 			complaintHistoryRepo.save(complaintHistory);
 
 			complaintRepo.save(c);
@@ -144,11 +144,7 @@ public class ComplaintService {
 			complaintHistory.setComplaintId(complaint.getId());
 			complaintHistory.setFeedback(complaint.getComplainFeedback());
 			complaintHistory.setName(admin.getFirstname()+" "+admin.getLastname());
-			complaintHistory.setName(branch.getFirstname()+" "+branch.getLastname());
-			complaintHistory.setName(region.getFirstname()+" "+region.getLastname());
 			complaintHistory.setModifiedByRole(role);
-			complaintHistory.setModifiedEntityId(branch.getId());
-			complaintHistory.setModifiedEntityId(region.getId());
 			complaintHistory.setModifiedEntityId(admin.getId());
 			complaintHistoryRepo.save(complaintHistory);
 
@@ -160,7 +156,7 @@ public class ComplaintService {
 		Optional<Complaint> complaintCheck = complaintRepo.findById(complaintId);
 		complaintCheck.ifPresent((Complaint c) -> {
 			c.setStep(ComplaintActions.MOVED_TO_BRANCH);
-			c.setIsMarkedForBranch(BranchId);
+			c.setIsMarkedForBranch(superAdminId);
 			complaintRepo.save(c);
 		});
 	}
@@ -169,7 +165,7 @@ public class ComplaintService {
 		Optional<Complaint> complaintCheck = complaintRepo.findById(complaintId);
 		complaintCheck.ifPresent((Complaint c) -> {
 			c.setStep(ComplaintActions.MOVED_TO_REGION);
-			c.setIsMarkedForRegion(regionId);
+			c.setIsMarkedForRegion(superAdminId);
 			complaintRepo.save(c);
 		});
 	}
@@ -209,13 +205,13 @@ public class ComplaintService {
 		return complaints;
 	}
 
-	public List<Complaint> checkStatus(Integer branchId) {
+	public List<Complaint> checkStatusByBranchId(Integer branchId) {
 		List<Complaint> complaints = new ArrayList<Complaint>();
 		complaints=complaintRepo.findAll().stream().filter(x->x.getBranchId()==branchId).collect(Collectors.toList());
 		return complaints;
 	}
 
-	public List<Complaint> checkStatus(Integer regionId) {
+	public List<Complaint> checkStatusByRegionId(Integer regionId) {
 		List<Complaint> complaints = new ArrayList<Complaint>();
 		complaints=complaintRepo.findAll().stream().filter(x->x.getRegionId()==regionId).collect(Collectors.toList());
 		return complaints;
@@ -256,7 +252,6 @@ public class ComplaintService {
 			ComplaintHistory complaintHistory=new ComplaintHistory();
 			complaintHistory.setComplaintId(complaint.getId());
 			complaintHistory.setFeedback(complaint.getComplainFeedback());
-			complaintHistory.setName(user.getFirstname()+" "+user.getLastname());
 			complaintHistory.setName(branch.getFirstname()+" "+branch.getLastname());
 			complaintHistory.setModifiedByRole(role);
 			complaintHistory.setModifiedEntityId(branch.getId());
@@ -278,12 +273,8 @@ public class ComplaintService {
 			ComplaintHistory complaintHistory=new ComplaintHistory();
 			complaintHistory.setComplaintId(complaint.getId());
 			complaintHistory.setFeedback(complaint.getComplainFeedback());
-			complaintHistory.setName(user.getFirstname()+" "+user.getLastname());
-			complaintHistory.setName(branch.getFirstname()+" "+branch.getLastname());
 			complaintHistory.setName(region.getFirstname()+" "+region.getLastname());
 			complaintHistory.setModifiedByRole(role);
-			complaintHistory.setModifiedEntityId(user.getId());
-			complaintHistory.setModifiedEntityId(branch.getId());
 			complaintHistory.setModifiedEntityId(region.getId());
 			complaintHistoryRepo.save(complaintHistory);
 
@@ -305,7 +296,7 @@ public class ComplaintService {
 		}
 	}
 
-	public Complaint requestToClose(String id) {
+	public Complaint requestToCloseBranch(String id) {
 		Optional<Complaint> complaintCheck = complaintRepo.findById(id);
 		if(complaintCheck.isPresent()){
 			Complaint c=complaintCheck.get();
@@ -319,7 +310,7 @@ public class ComplaintService {
 		}
 	}
 
-	public Complaint requestToClose(String id) {
+	public Complaint requestToCloseRegion(String id) {
 		Optional<Complaint> complaintCheck = complaintRepo.findById(id);
 		if(complaintCheck.isPresent()){
 			Complaint c=complaintCheck.get();
@@ -339,4 +330,12 @@ public class ComplaintService {
 	public List<ComplaintHistory> getAllComplaintHistoryOfComplaint(String complaintId) {
 		return complaintHistoryRepo.findAllByComplaintId(complaintId);
 	}
+	public List<Complaint> getAllComplaintByUserIdOrBranchIdOrRegionId(Integer userId, Integer branchId, Integer regionId) {
+		return complaintRepo.findByUserIdOrBranchIdOrRegionId(userId,branchId,regionId);
+	}
+
+	public List<Complaint> findByAssignedTo(String id){
+		return complaintRepo.findByAssignto(id);
+	}
+
 }

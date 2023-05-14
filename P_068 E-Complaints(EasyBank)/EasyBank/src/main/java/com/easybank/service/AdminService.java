@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import com.easybank.model.Branch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,7 +83,7 @@ public class AdminService {
 		return complaintRepo.findByAssigntoNullOrAssigntoNotNullAndStatusAndAssigntoNotIn(status);
 	}
 
-	public void assignToRandomBranches(Complaint complaint,Branch branch) {
+	public void assignToRandomBranches(Complaint complaint, Branch branch) {
 		Optional<Complaint> complaintCheck = complaintRepo.findById(complaint.getId());
 		complaintCheck.ifPresent((Complaint c) -> {
 			c.setAssignto(""+branch.getId());

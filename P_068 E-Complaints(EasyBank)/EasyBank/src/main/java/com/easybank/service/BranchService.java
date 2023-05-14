@@ -1,20 +1,22 @@
 package com.easybank.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Service;
-
 import com.easybank.dao.BranchRepository;
+import com.easybank.dao.ComplaintRepository;
+import com.easybank.enums.ComplaintActions;
 import com.easybank.model.Branch;
+import com.easybank.model.Complaint;
 import com.easybank.util.EmailSenderService;
 import com.easybank.util.TokenUtility;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -27,18 +29,21 @@ public class BranchService {
     @Autowired
     TokenUtility util;
 
+    @Autowired
+    BranchRepository branchRepo;
 
-    public String addBranch(BranchRepository userRepository) {
-        Branch newBranch = new Branch(userRepository);
-        branchRepository.save(newBranch);
-        String token = util.createToken(newBranch.getId());
-        mailService.sendEmail(newBranch.getEmailid(), "Branch Registration", " Hi " + newBranch.getFirstname() +
+    @Autowired
+    ComplaintRepository complaintRepo;
+
+
+    public String addBranch(Branch branch) {
+        branchRepo.save(branch);
+        String token = util.createToken(branch.getId());
+        mailService.sendEmail(branch.getEmailid(), "Branch Registration", " Hi " + branch.getFirstname() +
                 " You Have Been Successfully Registerd on Nainital Bank Complaint Portal. Please Click here to get data-> "
                 + "http://localhost:8085/save-branch" + token);
         return token;
     }
-
-    private final BranchRepository branchRepo;
 
     public BranchService(BranchRepository branchRepo) {
         super();
@@ -51,7 +56,7 @@ public class BranchService {
 
     public List<Branch> showAllBranchs() {
         List<Branch> branches = new ArrayList<Branch>();
-        for(Branch branch : branchRepo.findAll()) {
+        for (Branch branch : branchRepo.findAll()) {
             branches.add(branch);
         }
 
@@ -66,8 +71,8 @@ public class BranchService {
         return branchRepo.findById(id).orElse(new Branch());
     }
 
-    public Branch findByBranchnameAndPassword(String username, String password) {
-        return branchRepo.findByBranchnameAndPassword(username, password);
+    public Branch findByBranchNameAndPassword(String username, String password) {
+        return branchRepo.findByUsernameAndPassword(username, password);
     }
 
     private String generateToken() {
@@ -87,42 +92,38 @@ public class BranchService {
         return complaintRepo.findById(id).orElse(new Complaint());
     }
 
-    public Complaint editStatus(String id) {
-        return complaintRepo.findById(id).orElse(new Complaint());
-    }
-
     public List<Branch> getAllBranchExceptMe(int id) {
-        if(id==-1) {
+        if (id == -1) {
             return branchRepo.findAll();
-        }else {
-            return branchRepo.findAll().stream().filter(x->x.getId()!=id).collect(Collectors.toList());
+        } else {
+            return branchRepo.findAll().stream().filter(x -> x.getId() != id).collect(Collectors.toList());
         }
+    }
 
-        public void deleteComplaint(String id) {
-            complaintRepo.deleteById(id);
-        }
+    public void deleteComplaint(String id) {
+        complaintRepo.deleteById(id);
+    }
 
-        public void complainstatus(String id) {
-            complaintRepo.findById(id);
-
-        }
-
-        public void rollbackToUser(String id) {
-            Optional<Complaint> complaintCheck = complaintRepo.findById(id);
-            complaintCheck.ifPresent((Complaint c) -> {
-                c.setStep(ComplaintActions.BRANCH_ROLLBACK_TO_USER);
-                c.setLastUpdateDate(LocalDateTime.now());
-                complaintRepo.save(c);
-            });
-
-        }
-
-        public List<Complaint> getAllComplaintsNotAssignedToAnyOne(){
-            String status="Open";
-
-            return complaintRepo.findByAssigntoNullOrAssigntoNotNullAndStatusAndAssigntoNotIn(status);
-        }
-
-
+    public void complainstatus(String id) {
+        complaintRepo.findById(id);
 
     }
+
+    public void rollbackToUser(String id) {
+        Optional<Complaint> complaintCheck = complaintRepo.findById(id);
+        complaintCheck.ifPresent((Complaint c) -> {
+            c.setStep(ComplaintActions.BRANCH_ROLLBACK_TO_USER);
+            c.setLastUpdateDate(LocalDateTime.now());
+            complaintRepo.save(c);
+        });
+
+    }
+
+    public List<Complaint> getAllComplaintsNotAssignedToAnyOne() {
+        String status = "Open";
+
+        return complaintRepo.findByAssigntoNullOrAssigntoNotNullAndStatusAndAssigntoNotIn(status);
+    }
+
+
+}

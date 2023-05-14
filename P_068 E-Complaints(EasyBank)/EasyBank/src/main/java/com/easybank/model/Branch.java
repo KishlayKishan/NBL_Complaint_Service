@@ -26,6 +26,7 @@ public class Branch {
 	@Column(unique = true)
 	private String emailid;
 	private String password;
+	private String level;
 	
 	
 	public Branch() {
@@ -38,7 +39,7 @@ public class Branch {
 		this.username = username;
 		this.firstname = firstname;
 		this.lastname = lastname;
-		this.level = Region;
+		this.level = region;
 		this.branchname = branchname;
 		this.location = location;
 		this.mobileno = mobileno;

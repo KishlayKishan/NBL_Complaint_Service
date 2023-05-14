@@ -60,7 +60,7 @@ public class BranchController {
 
     @RequestMapping("/login-branch")
     public String loginUser(@ModelAttribute Branch branch, HttpServletRequest request ,HttpSession httpSession) {
-        Admin branchLoginCheck=branchService.findByUsernameAndPassword(branch.getUsername(), branch.getPassword());
+        Branch branchLoginCheck=branchService.findByBranchNameAndPassword(branch.getUsername(), branch.getPassword());
         if(branchLoginCheck!=null) {
             httpSession.setAttribute("user_name", branchLoginCheck.getEmailid());
             httpSession.setAttribute("user_role", "BRANCH");
@@ -76,8 +76,9 @@ public class BranchController {
         }
     }
     @GetMapping("/show-complaints")
-    public String showAllComplaints(HttpServletRequest request ) {
-        request.setAttribute("complaints", branchService.showAllComplaints());
+    public String showAllComplaints(HttpServletRequest request,HttpSession session) {
+        Branch currentUser = (Branch) session.getAttribute("userDetails");
+        request.setAttribute("complaints", complaintService.getAllComplaintByUserIdOrBranchIdOrRegionId(null,currentUser.getId(),null));
         request.setAttribute("mode", "ALL_COMPLAINTS");
         return "complaints";
     }
@@ -101,7 +102,7 @@ public class BranchController {
 
     @RequestMapping("/forward-to-Region")
     public String forwardToRegion(@RequestParam String complaintId,@RequestParam int RegionId,HttpServletRequest request ) throws Exception {
-        Region region=regionService.getBranchById(regionId);
+        Region region=regionService.getRegionById(regionId);
         if(region==null) {
             throw new Exception("NO REGION FOUND!");
         }

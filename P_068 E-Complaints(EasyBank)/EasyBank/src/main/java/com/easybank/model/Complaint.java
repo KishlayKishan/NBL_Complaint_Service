@@ -46,8 +46,12 @@ public class Complaint implements Serializable {
 	private Date closeddate;
 	private String review;
 	private Integer userId;
+	private Integer branchId;
+	private Integer regionId;
 	private Integer isMarkedForAdmin;
 	private Integer isMarkedForSuperAdmin;
+	private Integer isMarkedForBranch;
+	private Integer isMarkedForRegion;
 	@Lob
 	private String complainFeedback;
 	@Enumerated(EnumType.STRING)
